@@ -104,16 +104,16 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
     }
 
     // Fetch matching models from database
-    const modelosMap = new Map<string, { nome: string; categoria: string }>();
+    const modelosMap = new Map<string, { nome: string; classificacao: string }>();
     if (codigosSet.size > 0) {
       const { data: modelos } = await supabase
         .from("cadastro_modelos")
-        .select("codigo, nome, categoria")
+        .select("codigo, nome, classificacao")
         .in("codigo", Array.from(codigosSet));
 
       if (modelos) {
         for (const m of modelos) {
-          modelosMap.set(m.codigo, { nome: m.nome, categoria: m.categoria });
+          modelosMap.set(m.codigo, { nome: m.nome, classificacao: m.classificacao });
         }
       }
     }
