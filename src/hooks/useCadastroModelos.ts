@@ -7,6 +7,7 @@ export interface CadastroModelo {
   codigo: string;
   nome: string;
   categoria: string;
+  classificacao?: string;
   valor_unitario: number;
   created_at: string;
 }
@@ -34,6 +35,7 @@ export function useCadastroModelos() {
         codigo: data.codigo,
         nome: data.nome,
         categoria: data.categoria,
+        classificacao: data.categoria, // Duplicate for consistency
         valor_unitario: data.valor_unitario,
       });
       if (error) throw error;
@@ -52,6 +54,7 @@ export function useCadastroModelos() {
           codigo: d.codigo,
           nome: d.nome,
           categoria: d.categoria,
+          classificacao: d.categoria,
           valor_unitario: d.valor_unitario,
         }))
       );

@@ -63,14 +63,14 @@ export function EntradaLabForm({ onAdd, onImportBatch, isBatchLoading }: Props) 
     try {
       const { data, error } = await supabase
         .from("cadastro_modelos")
-        .select("nome, categoria")
+        .select("nome, classificacao")
         .eq("codigo", trimmed)
         .limit(1)
         .maybeSingle();
 
       if (!error && data) {
         setNome(data.nome);
-        setClassificacao(data.categoria);
+        setClassificacao(data.classificacao || "");
         setAutoFilled(true);
       } else {
         setAutoFilled(false);

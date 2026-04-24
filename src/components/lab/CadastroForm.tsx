@@ -234,8 +234,8 @@ export function CadastroForm({ modelos, onAdd, onAddBatch, onDelete, isAdmin }: 
                       <TableCell className="font-mono text-xs">{m.codigo}</TableCell>
                       <TableCell>{m.nome}</TableCell>
                       <TableCell>
-                        <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${m.categoria === "Não Interesse" ? "bg-destructive/15 text-destructive" : "bg-primary/15 text-primary"}`}>
-                          {m.categoria}
+                        <span className="inline-block px-2 py-0.5 rounded text-xs font-medium bg-primary/15 text-primary">
+                          {m.classificacao || m.categoria}
                         </span>
                       </TableCell>
                       {isAdmin && (
