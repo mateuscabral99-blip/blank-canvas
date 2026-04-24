@@ -148,10 +148,9 @@ export function Dashboard({ items, onCardClick }: Props) {
   const volumeByOrigin = useMemo(() => {
     const map = new Map<string, number>();
     items.forEach((i) => {
-      let origin = (i.origem || "").trim();
-      if (!origin) return;
-      
-      const key = origin;
+      const rawOrigin = (i.origem || "").trim().toLowerCase();
+      // Use 'Desconexão' as fallback/default if not 'reversa'
+      const key = rawOrigin.includes("reversa") ? "Reversa" : "Desconexão";
       map.set(key, (map.get(key) || 0) + 1);
     });
     
