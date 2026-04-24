@@ -411,6 +411,7 @@ export type Database = {
           concluido: boolean | null
           created_at: string
           created_by: string | null
+          created_by_id: string | null
           equipment_id: string | null
           id: string
           observacoes: string | null
@@ -424,6 +425,7 @@ export type Database = {
           concluido?: boolean | null
           created_at?: string
           created_by?: string | null
+          created_by_id?: string | null
           equipment_id?: string | null
           id?: string
           observacoes?: string | null
@@ -437,6 +439,7 @@ export type Database = {
           concluido?: boolean | null
           created_at?: string
           created_by?: string | null
+          created_by_id?: string | null
           equipment_id?: string | null
           id?: string
           observacoes?: string | null
@@ -683,6 +686,7 @@ export type Database = {
           codigo_imanager: string | null
           created_at: string
           created_by: string | null
+          created_by_id: string | null
           data_teste: string | null
           defeitos_identificados: string | null
           destino: string | null
@@ -709,6 +713,7 @@ export type Database = {
           codigo_imanager?: string | null
           created_at?: string
           created_by?: string | null
+          created_by_id?: string | null
           data_teste?: string | null
           defeitos_identificados?: string | null
           destino?: string | null
@@ -735,6 +740,7 @@ export type Database = {
           codigo_imanager?: string | null
           created_at?: string
           created_by?: string | null
+          created_by_id?: string | null
           data_teste?: string | null
           defeitos_identificados?: string | null
           destino?: string | null
