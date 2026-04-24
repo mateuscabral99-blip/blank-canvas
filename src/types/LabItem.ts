@@ -41,7 +41,7 @@ export interface StatusCalculado {
   acao_recomendada: AcaoRecomendada;
 }
 
-export function calcularStatus(item: Pick<LabItem, "interesse" | "origem_fluxo" | "status_teste" | "dias_estoque">): StatusCalculado {
+export function calcularStatus(item: Pick<LabItem, "interesse" | "status_teste" | "dias_estoque">): StatusCalculado {
   // Items not of interest go straight to Obsoleto
   if (!item.interesse) {
     return { status_final: "Obsoleto", acao_recomendada: "depreciar" };
