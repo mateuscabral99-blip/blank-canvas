@@ -148,13 +148,26 @@ export function Dashboard({ items, onCardClick }: Props) {
   const volumeByOrigin = useMemo(() => {
     const map = new Map<string, number>();
     items.forEach((i) => {
-      const raw = i.origem || "Não informado";
-      const cleaned = raw.toLowerCase().trim();
-      const origin = cleaned.includes("reversa") ? "Reversa" : "Desconexão";
+      const origin = i.origem?.trim();
+      if (!origin || origin.toLowerCase() === "não informado") return;
       map.set(origin, (map.get(origin) || 0) + 1);
     });
-    return [...map.entries()]
-      .map(([origem, count]) => ({ origem, count }))
+    
+    const colors = [
+      "hsl(var(--primary))",
+      "hsl(217, 91%, 30%)",
+      "hsl(160, 60%, 45%)",
+      "hsl(35, 92%, 50%)",
+      "hsl(0, 70%, 55%)",
+      "hsl(262, 83%, 58%)",
+    ];
+
+    return Array.from(map.entries())
+      .map(([origem, count], idx) => ({ 
+        origem, 
+        count,
+        color: colors[idx % colors.length]
+      }))
       .sort((a, b) => b.count - a.count);
   }, [items]);
 
