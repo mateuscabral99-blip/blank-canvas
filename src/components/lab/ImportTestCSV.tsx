@@ -121,7 +121,7 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
       // Build lookup map
       const snMap = new Map<string, { codigo: string; nome: string }>();
       (labEntries || []).forEach((entry: any) => {
-        snMap.set(entry.serial_number, { codigo: entry.codigo, nome: entry.nome });
+        snMap.set(entry.sn, { codigo: entry.codigo, nome: entry.nome });
       });
 
       const batch: NewTestResult[] = [];
