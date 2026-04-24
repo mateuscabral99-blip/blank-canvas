@@ -47,7 +47,7 @@ export function RelatorioEntradas({ userRole }: Props) {
   const uniqueDestinos = useMemo(() => [...new Set(items.map(i => getDestino(i)).filter(Boolean))], [items]);
   const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferente).filter(Boolean))], [items]);
   const uniqueOrigens = useMemo(() => {
-    const set = new Set(items.map(i => (i.origem || "Outros").trim()));
+    const set = new Set(items.map(i => (i.origem || "").trim()).filter(Boolean));
     // Merge variations like 'reversa' and 'Reversa'
     const normalizedMap = new Map<string, string>();
     set.forEach(val => {
