@@ -383,7 +383,7 @@ export function InventarioLab({ items, userRole }: Props) {
                     <TableCell className="text-xs">{i.categoria}</TableCell>
                     <TableCell>
                       <Badge variant="outline" className={`text-[10px] font-medium ${originBadgeColor(i.origem)}`}>
-                        {i.origem}
+                        {i.origem || "Outros"}
                       </Badge>
                     </TableCell>
                     <TableCell>
