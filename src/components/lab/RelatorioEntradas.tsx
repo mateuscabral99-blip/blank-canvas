@@ -264,6 +264,7 @@ export function RelatorioEntradas({ userRole }: Props) {
                   <TableHead>Código</TableHead>
                   <TableHead>Nome</TableHead>
                   <TableHead>Categoria</TableHead>
+                  <TableHead>Origem</TableHead>
                   <TableHead>Destino</TableHead>
                   <TableHead>Conferente</TableHead>
                 </TableRow>
@@ -271,7 +272,7 @@ export function RelatorioEntradas({ userRole }: Props) {
               <TableBody>
                 {paginated.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center text-muted-foreground py-8">Nenhum registro encontrado.</TableCell>
+                    <TableCell colSpan={8} className="text-center text-muted-foreground py-8">Nenhum registro encontrado.</TableCell>
                   </TableRow>
                 ) : (
                   paginated.map(i => (
@@ -281,8 +282,9 @@ export function RelatorioEntradas({ userRole }: Props) {
                       <TableCell>{i.codigo}</TableCell>
                       <TableCell>{i.nome}</TableCell>
                       <TableCell>{i.categoria}</TableCell>
+                      <TableCell>{i.origem}</TableCell>
                       <TableCell>{getDestino(i)}</TableCell>
-                      <TableCell>{i.conferido_por}</TableCell>
+                      <TableCell>{i.conferente}</TableCell>
                     </TableRow>
                   ))
                 )}
