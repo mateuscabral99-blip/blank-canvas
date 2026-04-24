@@ -70,7 +70,7 @@ export function CadastroForm({ modelos, onAdd, onAddBatch, onDelete, isAdmin }: 
   };
 
   const handleDownloadCSV = () => {
-    const csvContent = "codigo_imanager;nome;classificacao\nEX-001;ONT EXEMPLO;ONT WIFI 6\n";
+    const csvContent = "codigo;nome;classificacao\nEX-001;ONT EXEMPLO;ONT WIFI 6\n";
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -94,12 +94,12 @@ export function CadastroForm({ modelos, onAdd, onAddBatch, onDelete, isAdmin }: 
       }
 
       const header = parseLine(lines[0]).map(normalizeHeaderKey);
-      const codigoIdx = findHeaderIndex(header, ["codigo imanager", "codigo i manager", "codigoimanager"]);
+      const codigoIdx = findHeaderIndex(header, ["codigo", "codigo imanager", "codigo i manager", "codigoimanager"]);
       const nomeIdx = findHeaderIndex(header, ["nome"]);
       const classIdx = findHeaderIndex(header, ["classificacao"]);
 
       const missingColumns: string[] = [];
-      if (codigoIdx === -1) missingColumns.push("codigo_imanager");
+      if (codigoIdx === -1) missingColumns.push("codigo");
       if (nomeIdx === -1) missingColumns.push("nome");
       if (classIdx === -1) missingColumns.push("classificacao");
 
@@ -179,7 +179,7 @@ export function CadastroForm({ modelos, onAdd, onAddBatch, onDelete, isAdmin }: 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="codigo">Código I-MANAGER</Label>
+                <Label htmlFor="codigo">Código</Label>
                 <Input id="codigo" value={codigo} onChange={(e) => setCodigo(e.target.value)} placeholder="Código do equipamento" />
               </div>
               <div className="space-y-1.5">

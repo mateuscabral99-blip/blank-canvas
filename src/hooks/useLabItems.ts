@@ -97,7 +97,7 @@ export function useLabItems() {
 
       const rows = batch.map((data) => {
         const { status_final, acao_recomendada } = calcularStatus(data);
-        const normalizedOrigem = normalizeOrigem(data.origem || (data as any).origem_fluxo);
+        const normalizedOrigem = normalizeOrigem(data.origem);
         
         return {
           codigo: (data.codigo || "").trim(),

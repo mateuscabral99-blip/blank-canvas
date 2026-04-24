@@ -74,8 +74,8 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
 
     const header = rows[0].map((h) => normalizeText(h ?? ""));
 
-    const codigoIdx = findHeaderIndex(header, ["codigo", "i-manager", "imanager", "codigo_imanager", "codigo imanager"]);
-    const snIdx = findHeaderIndex(header, ["sn", "serial", "serial_number"]);
+    const codigoIdx = findHeaderIndex(header, ["codigo", "i-manager", "imanager", "codigo imanager"]);
+    const snIdx = findHeaderIndex(header, ["sn", "serial"]);
     const nomeIdx = findHeaderIndex(header, ["nome", "item_nome", "nome_item"]);
     const catIdx = findHeaderIndex(header, ["categoria"]);
     const destIdx = findHeaderIndex(header, ["destinacao", "destino"]);
