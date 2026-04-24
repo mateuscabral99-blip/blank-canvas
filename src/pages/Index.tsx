@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import alaresLogo from "@/assets/alares-logo.png";
 import { CadastroForm } from "@/components/lab/CadastroForm";
 import { EntradaLabForm } from "@/components/lab/EntradaLabForm";
