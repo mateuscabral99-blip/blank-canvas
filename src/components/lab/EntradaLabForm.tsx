@@ -96,6 +96,7 @@ export function EntradaLabForm({ onAdd, onImportBatch, isBatchLoading }: Props) 
     const origemFluxo: "qualidade" | "reversa" = origem === "Desconexão" ? "qualidade" : "reversa";
     return {
       codigo: codigo.trim(),
+      modelo: classificacao.trim(),
       sn: serial.trim(),
       nome: nome.trim(),
       categoria,
