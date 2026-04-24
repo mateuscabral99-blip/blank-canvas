@@ -191,6 +191,16 @@ export function RelatorioEntradas({ userRole }: Props) {
               </Select>
             </div>
             <div>
+              <Label className="text-xs">Origem</Label>
+              <Select value={filterOrigem} onValueChange={v => { setFilterOrigem(v); setPage(1); }}>
+                <SelectTrigger><SelectValue placeholder="Selecione as opções" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todas</SelectItem>
+                  {uniqueOrigens.map(o => <SelectItem key={o} value={o}>{o}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
               <Label className="text-xs">Busca por Serial/Código</Label>
               <Input placeholder="Buscar..." value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} />
             </div>
