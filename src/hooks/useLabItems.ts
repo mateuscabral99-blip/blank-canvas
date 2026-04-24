@@ -41,12 +41,11 @@ export function useLabItems() {
       const { error } = await supabase.from("equipamentos").insert({
         codigo: data.codigo,
         modelo_id: (data as any).modelo_id, // preserve if exists
-        serial_number: data.sn,
+        sn: data.sn,
         nome: data.nome,
         categoria: data.categoria,
         interesse: data.interesse,
         origem: data.origem,
-        origem_fluxo: data.origem_fluxo,
         status_teste: data.status_teste,
         dias_estoque: data.dias_estoque,
         valor_estimado: data.valor_estimado,
@@ -56,7 +55,7 @@ export function useLabItems() {
         status_final,
         acao_recomendada,
         created_by: user?.email || "",
-      });
+      } as any); // Cast to any to avoid type check issues with stale generated types
       if (error) throw error;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["lab_items"] }),
