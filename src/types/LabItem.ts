@@ -6,8 +6,8 @@ export interface LabItem {
   nome: string;
   categoria: string;
   interesse: boolean;
-  origem?: string;
-  origem_fluxo: "qualidade" | "reversa";
+  origem: string;
+  origem_fluxo?: string;
   status_teste: "aprovado" | "reprovado" | "pendente";
   dias_estoque: number;
   valor_estimado: number;
