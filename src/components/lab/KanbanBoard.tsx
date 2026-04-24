@@ -213,7 +213,7 @@ export function KanbanBoard({ items, isAdmin, onNavigateToLaudo }: Props) {
       if (filterClassification !== "all") {
         if (!normalizeText(item.nome).toUpperCase().includes(filterClassification.toUpperCase())) return false;
       }
-      if (q && !normalizeText(item.nome).includes(q) && !normalizeText(item.sn).includes(q) && !normalizeText(item.codigo).includes(q)) return false;
+      if (q && !normalizeText(item.nome).includes(q) && !normalizeText(item.sn).includes(q) && !normalizeText(item.modelo || item.codigo).includes(q)) return false;
       return true;
     });
   }, [deduped, filterClassification, searchQuery]);
