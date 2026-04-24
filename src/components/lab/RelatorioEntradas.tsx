@@ -50,6 +50,9 @@ export function RelatorioEntradas({ userRole }: Props) {
 
   const filtered = useMemo(() => {
     return items.filter(i => {
+      // Excluir modelos de teste
+      if (i.modelo === 'Test Model 001' || i.sn === 'SN-FINAL-TEST-001') return false;
+
       if (dateFrom && i.data_entrada < dateFrom) return false;
       if (dateTo && i.data_entrada > dateTo) return false;
       if (filterCategoria !== "all" && i.categoria !== filterCategoria) return false;
@@ -59,9 +62,10 @@ export function RelatorioEntradas({ userRole }: Props) {
       if (filterOrigem !== "all" && i.origem !== filterOrigem) return false;
       if (search) {
         const s = search.toLowerCase();
+        const codigoSearch = (i.modelo || i.codigo || "").toLowerCase();
         if (
           !i.sn.toLowerCase().includes(s) &&
-          !i.codigo.toLowerCase().includes(s) &&
+          !codigoSearch.includes(s) &&
           !i.nome.toLowerCase().includes(s)
         ) return false;
       }
