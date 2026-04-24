@@ -98,15 +98,15 @@ export function InventarioLab({ items, userRole }: Props) {
 
   const volumeByOrigin = useMemo(() => {
     const map = new Map<string, number>();
-    filtered.forEach((i) => {
-      const origin = mapOriginLabel(i.origem_fluxo || "Não informado");
+    items.forEach((i) => {
+      const origin = i.origem || "Não informado";
       map.set(origin, (map.get(origin) || 0) + 1);
     });
     return [...map.entries()]
       .map(([origem, count]) => ({ origem, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 10);
-  }, [filtered]);
+  }, [items]);
 
   const totalPages = Math.max(1, Math.ceil(sorted.length / itemsPerPage));
   const paginated = sorted.slice((page - 1) * itemsPerPage, page * itemsPerPage);
