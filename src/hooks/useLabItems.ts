@@ -82,10 +82,12 @@ export function useLabItems() {
         return "pendente";
       };
 
-      // Normalize origem_fluxo to DB-allowed values: 'qualidade' | 'reversa'
-      const normalizeOrigemFluxo = (raw: string | undefined): "qualidade" | "reversa" => {
+      // Normalize origem to DB-allowed values, prioritizing 'Desconexão' for 'qualidade'
+      const normalizeOrigem = (raw: string | undefined): string => {
         const v = (raw || "").toString().trim().toLowerCase();
-        return v === "reversa" ? "reversa" : "qualidade";
+        if (v === "reversa") return "Reversa";
+        if (v === "qualidade" || v.includes("desconex")) return "Desconexão";
+        return (raw || "Desconexão").trim();
       };
 
       const rows = batch.map((data) => {
