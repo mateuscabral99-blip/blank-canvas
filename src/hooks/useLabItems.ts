@@ -14,21 +14,27 @@ export function useLabItems() {
     queryKey: ["lab_items"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("lab_items")
+        .from("equipamentos")
         .select("*")
         .order("created_at", { ascending: false });
       if (error) throw error;
-      return data as unknown as LabItem[];
+      
+      // Map database fields to the LabItem type used in the frontend
+      return (data as any[]).map(item => ({
+        ...item,
+        sn: item.serial_number || "",
+        conferente: item.conferido_por || "",
+      })) as LabItem[];
     },
   });
 
   const addMutation = useMutation({
     mutationFn: async (data: NewItem) => {
       const { status_final, acao_recomendada } = calcularStatus(data);
-      const { error } = await supabase.from("lab_items" as any).insert({
+      const { error } = await supabase.from("equipamentos").insert({
         codigo: data.codigo,
-        modelo: data.modelo,
-        sn: data.sn,
+        modelo_id: (data as any).modelo_id, // preserve if exists
+        serial_number: data.sn,
         nome: data.nome,
         categoria: data.categoria,
         interesse: data.interesse,
@@ -38,7 +44,7 @@ export function useLabItems() {
         dias_estoque: data.dias_estoque,
         valor_estimado: data.valor_estimado,
         data_entrada: data.data_entrada,
-        conferente: data.conferente,
+        conferido_por: data.conferente,
         
         status_final,
         acao_recomendada,
