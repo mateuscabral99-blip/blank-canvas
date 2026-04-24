@@ -40,6 +40,41 @@ function findHeaderIndex(headers: string[], candidates: string[]): number {
   );
 }
 
+function parseDateToISO(dateStr: string): string {
+  if (!dateStr) return new Date().toISOString().slice(0, 10);
+  
+  // Try to parse DD/MM/YY format (ex: 22/04/26)
+  const parts = dateStr.split(/[\/\-]/);
+  if (parts.length === 3) {
+    let day, month, year;
+    
+    // User said DD/MM/YY
+    day = parts[0].padStart(2, '0');
+    month = parts[1].padStart(2, '0');
+    year = parts[2];
+    
+    if (year.length === 2) {
+      year = "20" + year;
+    }
+    
+    // Validate if it's a valid date
+    const isoDate = `${year}-${month}-${day}`;
+    if (!isNaN(Date.parse(isoDate))) {
+      return isoDate;
+    }
+  }
+  
+  // Fallback to current date or try native parsing if ISO-ish
+  try {
+    const d = new Date(dateStr);
+    if (!isNaN(d.getTime())) {
+      return d.toISOString().slice(0, 10);
+    }
+  } catch (e) {}
+  
+  return new Date().toISOString().slice(0, 10);
+}
+
 export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [processing, setProcessing] = useState(false);
