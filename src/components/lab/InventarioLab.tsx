@@ -150,7 +150,7 @@ export function InventarioLab({ items, userRole }: Props) {
     if (!canExport) return;
     const header = "Data Entrada,SN,Código,Nome,Categoria,Origem,Destino,Conferente\n";
     const rows = filtered.map(i =>
-      [i.data_entrada, i.sn, i.modelo || i.codigo, i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
+      [i.data_entrada, i.sn, i.modelo || "", i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
         .map(v => `"${(String(v || "")).replace(/"/g, '""')}"`)
         .join(",")
     ).join("\n");
@@ -378,7 +378,7 @@ export function InventarioLab({ items, userRole }: Props) {
                   <TableRow key={i.id}>
                     <TableCell className="whitespace-nowrap text-xs">{i.data_entrada}</TableCell>
                     <TableCell className="font-mono text-xs">{i.sn}</TableCell>
-                    <TableCell className="font-mono text-xs">{i.modelo || i.codigo}</TableCell>
+                    <TableCell className="font-mono text-xs">{i.modelo || "-"}</TableCell>
                     <TableCell className="text-xs">{i.nome}</TableCell>
                     <TableCell className="text-xs">{i.categoria}</TableCell>
                     <TableCell>

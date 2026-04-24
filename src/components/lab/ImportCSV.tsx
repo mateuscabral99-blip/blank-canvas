@@ -176,6 +176,7 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
 
       batch.push({
         codigo: codigoVal,
+        modelo: classVal,
         sn: snVal,
         nome: nomeVal,
         categoria,
