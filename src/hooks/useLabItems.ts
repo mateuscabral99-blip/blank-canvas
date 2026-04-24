@@ -10,7 +10,7 @@ export function useLabItems() {
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
-  const { data: items = [], isLoading } = useQuery({
+  const { data: items = [], isLoading, refetch } = useQuery({
     queryKey: ["lab_items"],
     queryFn: async () => {
       const { data, error } = await supabase
