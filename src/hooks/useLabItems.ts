@@ -25,17 +25,19 @@ export function useLabItems() {
   const addMutation = useMutation({
     mutationFn: async (data: NewItem) => {
       const { status_final, acao_recomendada } = calcularStatus(data);
-      const { error } = await supabase.from("lab_items").insert({
+      const { error } = await supabase.from("lab_items" as any).insert({
         codigo: data.codigo,
         sn: data.sn,
         nome: data.nome,
         categoria: data.categoria,
         interesse: data.interesse,
+        origem: data.origem,
         origem_fluxo: data.origem_fluxo,
         status_teste: data.status_teste,
         dias_estoque: data.dias_estoque,
         valor_estimado: data.valor_estimado,
         data_entrada: data.data_entrada,
+        conferente: data.conferente,
         conferido_por: data.conferido_por,
         status_final,
         acao_recomendada,
