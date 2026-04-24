@@ -140,7 +140,7 @@ export function RetornoReparo({ labItems }: Props) {
     const labItem = labItems.find((i) => i.sn?.trim().toUpperCase() === snUpper);
     if (labItem) {
       await supabase
-        .from("lab_items")
+        .from("equipamentos")
         .update({
           status_final: action === "estoque" ? "Aprovado" : "Pendente",
           acao_recomendada: action === "estoque" ? "Estoque" : "Re-teste Amostragem",
