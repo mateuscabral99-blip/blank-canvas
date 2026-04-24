@@ -1,0 +1,1 @@
+ALTER TABLE public.test_results ADD COLUMN testado_por text NOT NULL DEFAULT '';

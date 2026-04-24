@@ -1,0 +1,2 @@
+ALTER TABLE public.lab_items DROP CONSTRAINT IF EXISTS lab_items_status_teste_check;
+ALTER TABLE public.lab_items ADD CONSTRAINT lab_items_status_teste_check CHECK (status_teste = ANY (ARRAY['aprovado'::text, 'reprovado'::text, 'pendente'::text]));
