@@ -94,7 +94,7 @@ export function CadastroForm({ modelos, onAdd, onAddBatch, onDelete, isAdmin }: 
       }
 
       const header = parseLine(lines[0]).map(normalizeHeaderKey);
-      const codigoIdx = findHeaderIndex(header, ["codigo imanager", "codigo i manager", "codigoimanager"]);
+      const codigoIdx = findHeaderIndex(header, ["codigo", "codigo imanager", "codigo i manager", "codigoimanager"]);
       const nomeIdx = findHeaderIndex(header, ["nome"]);
       const classIdx = findHeaderIndex(header, ["classificacao"]);
 
