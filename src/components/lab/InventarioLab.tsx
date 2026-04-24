@@ -62,7 +62,7 @@ export function InventarioLab({ items, userRole }: Props) {
   const uniqueCategorias = useMemo(() => [...new Set(items.map(i => i.categoria).filter(Boolean))], [items]);
   const uniqueNomes = useMemo(() => [...new Set(items.map(i => i.nome).filter(Boolean))], [items]);
   const uniqueDestinos = useMemo(() => [...new Set(items.map(i => getDestino(i)).filter(Boolean))], [items]);
-  const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferido_por).filter(Boolean))], [items]);
+  const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferente).filter(Boolean))], [items]);
 
   const filtered = useMemo(() => {
     return items.filter(i => {
