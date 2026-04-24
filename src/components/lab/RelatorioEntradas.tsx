@@ -70,7 +70,7 @@ export function RelatorioEntradas({ userRole }: Props) {
       if (filterNome !== "all" && i.nome !== filterNome) return false;
       if (filterDestino !== "all" && getDestino(i) !== filterDestino) return false;
       if (filterConferente !== "all" && i.conferente !== filterConferente) return false;
-      if (filterOrigem !== "all" && i.origem !== filterOrigem) return false;
+      if (filterOrigem !== "all" && (i.origem || "").toLowerCase() !== filterOrigem.toLowerCase()) return false;
       if (search) {
         const s = search.toLowerCase();
         const codigoSearch = (i.modelo || i.codigo || "").toLowerCase();
