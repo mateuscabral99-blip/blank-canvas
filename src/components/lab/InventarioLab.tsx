@@ -148,7 +148,7 @@ export function InventarioLab({ items, userRole }: Props) {
     if (!canExport) return;
     const header = "Data Entrada,SN,Código,Nome,Categoria,Origem,Destino,Conferente\n";
     const rows = filtered.map(i =>
-      [i.data_entrada, i.sn, i.modelo || "", i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
+      [i.data_entrada, i.sn, i.codigo || "", i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
         .map(v => `"${(String(v || "")).replace(/"/g, '""')}"`)
         .join(",")
     ).join("\n");
