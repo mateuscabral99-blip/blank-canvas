@@ -119,6 +119,7 @@ export function ConsultaGeral() {
           .forEach((r: any) => {
             nome = nome || r.nome;
             codigo = codigo || r.codigo;
+            origem = origem || r.origem;
             // Prefer data_entrada, fallback to created_at
             const iso = r.data_entrada || r.created_at;
             const { date, time } = formatDateTime(iso);
