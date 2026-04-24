@@ -180,11 +180,13 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
         nome: nomeVal,
         categoria,
         interesse,
+        origem: cols[origemIdx]?.trim() || "",
         origem_fluxo: origemFluxo,
         status_teste: "pendente",
         dias_estoque: 0,
         valor_estimado: 0,
         data_entrada,
+        conferente: conferido_por,
         conferido_por,
       });
     }
