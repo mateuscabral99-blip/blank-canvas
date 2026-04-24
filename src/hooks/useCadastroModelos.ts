@@ -7,6 +7,7 @@ export interface CadastroModelo {
   codigo: string;
   nome: string;
   categoria: string;
+  classificacao?: string;
   valor_unitario: number;
   created_at: string;
 }
