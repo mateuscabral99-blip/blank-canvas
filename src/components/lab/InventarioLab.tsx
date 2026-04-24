@@ -378,8 +378,8 @@ export function InventarioLab({ items, userRole }: Props) {
                     <TableCell className="text-xs">{i.nome}</TableCell>
                     <TableCell className="text-xs">{i.categoria}</TableCell>
                     <TableCell>
-                      <Badge variant="outline" className={`text-[10px] font-medium ${originBadgeColor(i.origem_fluxo)}`}>
-                        {mapOriginLabel(i.origem_fluxo)}
+                      <Badge variant="outline" className={`text-[10px] font-medium ${originBadgeColor(i.origem)}`}>
+                        {i.origem}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -387,7 +387,7 @@ export function InventarioLab({ items, userRole }: Props) {
                         {destino}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-xs">{i.conferido_por}</TableCell>
+                    <TableCell className="text-xs">{i.conferente}</TableCell>
                   </TableRow>
                 );
               })}
