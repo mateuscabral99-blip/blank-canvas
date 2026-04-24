@@ -260,7 +260,15 @@ export type Database = {
           usuario_nome?: string | null
           valor_estimado?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "lab_items_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipamentos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       laudo_attachments: {
         Row: {
@@ -525,7 +533,15 @@ export type Database = {
           sn?: string | null
           testado_por?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "test_results_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipamentos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
