@@ -478,6 +478,7 @@ export type Database = {
           data_retorno: string | null
           defeito_constatado: string | null
           encaminhamento: string | null
+          equipment_id: string | null
           id: string
           lote: string | null
           observacoes: string | null
@@ -494,6 +495,7 @@ export type Database = {
           data_retorno?: string | null
           defeito_constatado?: string | null
           encaminhamento?: string | null
+          equipment_id?: string | null
           id?: string
           lote?: string | null
           observacoes?: string | null
@@ -510,6 +512,7 @@ export type Database = {
           data_retorno?: string | null
           defeito_constatado?: string | null
           encaminhamento?: string | null
+          equipment_id?: string | null
           id?: string
           lote?: string | null
           observacoes?: string | null
@@ -521,6 +524,13 @@ export type Database = {
           tecnico?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "repair_returns_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipamentos"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "repair_returns_supplier_id_fkey"
             columns: ["supplier_id"]
