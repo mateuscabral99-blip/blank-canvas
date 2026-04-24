@@ -233,12 +233,19 @@ export function ConsultaGeral() {
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <CardTitle className="text-sm font-mono truncate">{r.sn}</CardTitle>
-                    {r.found && (r.nome || r.codigo) && (
-                      <p className="text-xs text-muted-foreground mt-1 truncate">
-                        {r.codigo && <span className="font-mono">{r.codigo}</span>}
-                        {r.codigo && r.nome && " · "}
-                        {r.nome}
-                      </p>
+                    {r.found && (r.nome || r.codigo || r.origem) && (
+                      <div className="mt-1 space-y-1">
+                        <p className="text-xs text-muted-foreground truncate">
+                          {r.codigo && <span className="font-mono text-primary/80">{r.codigo}</span>}
+                          {r.codigo && r.nome && " · "}
+                          {r.nome}
+                        </p>
+                        {r.origem && (
+                          <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/70">
+                            Origem: {r.origem}
+                          </p>
+                        )}
+                      </div>
                     )}
                   </div>
                   {r.found ? (
