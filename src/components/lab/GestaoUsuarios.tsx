@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 interface ManagedUser {
-  id: string;
+  user_id: string;
   email: string;
   nome: string;
   ativo: boolean;
@@ -34,57 +34,38 @@ export function GestaoUsuarios() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("operador");
 
-  const callEdge = useCallback(async (body: any) => {
-    const { data: { session } } = await supabase.auth.getSession();
-    const res = await supabase.functions.invoke("manage-users", {
-      body,
-      headers: { Authorization: `Bearer ${session?.access_token}` },
-    });
-    if (res.error) throw new Error(res.error.message || "Erro na operação");
-    if (res.data?.error) throw new Error(res.data.error);
-    return res.data;
-  }, []);
-
   const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await callEdge({ action: "list" });
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
       setUsers(data || []);
     } catch (err: any) {
       toast.error(err.message);
     } finally {
       setLoading(false);
     }
-  }, [callEdge]);
+  }, []);
 
   useEffect(() => { fetchUsers(); }, [fetchUsers]);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nome.trim() || !email.trim() || !password.trim()) {
-      toast.error("Preencha todos os campos.");
-      return;
-    }
-    if (password.length < 6) {
-      toast.error("A senha deve ter pelo menos 6 caracteres.");
-      return;
-    }
-    setSubmitting(true);
-    try {
-      await callEdge({ action: "create", nome: nome.trim(), email: email.trim(), password, role });
-      toast.success("Usuário criado com sucesso!");
-      setNome(""); setEmail(""); setPassword(""); setRole("operador");
-      fetchUsers();
-    } catch (err: any) {
-      toast.error(err.message);
-    } finally {
-      setSubmitting(false);
-    }
+    toast.error("A criação de usuários via painel requer configuração de Edge Functions.");
   };
 
   const handleToggleStatus = async (user: ManagedUser) => {
     try {
-      await callEdge({ action: "toggle_status", user_id: user.id, ativo: !user.ativo });
+      const { error } = await supabase
+        .from('profiles')
+        .update({ ativo: !user.ativo })
+        .eq('user_id', user.user_id);
+      
+      if (error) throw error;
       toast.success(user.ativo ? "Usuário desativado." : "Usuário reativado.");
       fetchUsers();
     } catch (err: any) {
@@ -95,8 +76,13 @@ export function GestaoUsuarios() {
   const handleDelete = async (user: ManagedUser) => {
     if (!confirm(`Tem certeza que deseja excluir ${user.nome || user.email}? Esta ação é irreversível.`)) return;
     try {
-      await callEdge({ action: "delete", user_id: user.id });
-      toast.success("Usuário excluído.");
+      const { error } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('user_id', user.user_id);
+      
+      if (error) throw error;
+      toast.success("Perfil excluído.");
       fetchUsers();
     } catch (err: any) {
       toast.error(err.message);
@@ -105,7 +91,12 @@ export function GestaoUsuarios() {
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     try {
-      await callEdge({ action: "update_role", user_id: userId, role: newRole });
+      const { error } = await supabase
+        .from('profiles')
+        .update({ role: newRole })
+        .eq('user_id', userId);
+      
+      if (error) throw error;
       toast.success("Nível atualizado.");
       fetchUsers();
     } catch (err: any) {
@@ -186,11 +177,11 @@ export function GestaoUsuarios() {
               </TableHeader>
               <TableBody>
                 {users.map(u => (
-                  <TableRow key={u.id}>
+                  <TableRow key={u.user_id}>
                     <TableCell className="font-medium">{u.nome || "—"}</TableCell>
                     <TableCell className="text-muted-foreground text-sm">{u.email}</TableCell>
                     <TableCell>
-                      <Select defaultValue={u.role} onValueChange={v => handleRoleChange(u.id, v)}>
+                      <Select defaultValue={u.role} onValueChange={v => handleRoleChange(u.user_id, v)}>
                         <SelectTrigger className="w-[140px] h-8 text-xs">
                           <SelectValue>{badge(u.role)}</SelectValue>
                         </SelectTrigger>
