@@ -27,6 +27,7 @@ export function useLabItems() {
       const { status_final, acao_recomendada } = calcularStatus(data);
       const { error } = await supabase.from("lab_items" as any).insert({
         codigo: data.codigo,
+        modelo: data.modelo,
         sn: data.sn,
         nome: data.nome,
         categoria: data.categoria,
