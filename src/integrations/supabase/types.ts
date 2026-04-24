@@ -139,6 +139,114 @@ export type Database = {
           },
         ]
       }
+      lab_items: {
+        Row: {
+          categoria: string | null
+          codigo: string | null
+          codigo_interno: string | null
+          codigo_item: string | null
+          condicao: string | null
+          conferente: string | null
+          conferente_id: string | null
+          conferente_nome: string | null
+          created_at: string | null
+          created_by_name: string | null
+          data_entrada: string | null
+          data_saida: string | null
+          equipment_id: string | null
+          fabricante: string | null
+          fornecedor: string | null
+          id: string
+          interesse: boolean | null
+          localizacao: string | null
+          modelo: string | null
+          nome: string | null
+          observacoes: string | null
+          origem: string | null
+          origem_fluxo: string | null
+          origem_nome: string | null
+          setor: string | null
+          sn: string | null
+          status: string | null
+          status_final: string | null
+          supplier_id: string | null
+          tecnico: string | null
+          tecnico_responsavel: string | null
+          usuario: string | null
+          usuario_nome: string | null
+        }
+        Insert: {
+          categoria?: string | null
+          codigo?: string | null
+          codigo_interno?: string | null
+          codigo_item?: string | null
+          condicao?: string | null
+          conferente?: string | null
+          conferente_id?: string | null
+          conferente_nome?: string | null
+          created_at?: string | null
+          created_by_name?: string | null
+          data_entrada?: string | null
+          data_saida?: string | null
+          equipment_id?: string | null
+          fabricante?: string | null
+          fornecedor?: string | null
+          id?: string
+          interesse?: boolean | null
+          localizacao?: string | null
+          modelo?: string | null
+          nome?: string | null
+          observacoes?: string | null
+          origem?: string | null
+          origem_fluxo?: string | null
+          origem_nome?: string | null
+          setor?: string | null
+          sn?: string | null
+          status?: string | null
+          status_final?: string | null
+          supplier_id?: string | null
+          tecnico?: string | null
+          tecnico_responsavel?: string | null
+          usuario?: string | null
+          usuario_nome?: string | null
+        }
+        Update: {
+          categoria?: string | null
+          codigo?: string | null
+          codigo_interno?: string | null
+          codigo_item?: string | null
+          condicao?: string | null
+          conferente?: string | null
+          conferente_id?: string | null
+          conferente_nome?: string | null
+          created_at?: string | null
+          created_by_name?: string | null
+          data_entrada?: string | null
+          data_saida?: string | null
+          equipment_id?: string | null
+          fabricante?: string | null
+          fornecedor?: string | null
+          id?: string
+          interesse?: boolean | null
+          localizacao?: string | null
+          modelo?: string | null
+          nome?: string | null
+          observacoes?: string | null
+          origem?: string | null
+          origem_fluxo?: string | null
+          origem_nome?: string | null
+          setor?: string | null
+          sn?: string | null
+          status?: string | null
+          status_final?: string | null
+          supplier_id?: string | null
+          tecnico?: string | null
+          tecnico_responsavel?: string | null
+          usuario?: string | null
+          usuario_nome?: string | null
+        }
+        Relationships: []
+      }
       laudo_attachments: {
         Row: {
           created_at: string
@@ -240,6 +348,54 @@ export type Database = {
         }
         Relationships: []
       }
+      repair_returns: {
+        Row: {
+          created_at: string | null
+          data_analise: string | null
+          data_retorno: string | null
+          defeito_constatado: string | null
+          encaminhamento: string | null
+          id: string
+          lote: string | null
+          observacoes: string | null
+          resultado_amostragem: string | null
+          sn: string | null
+          solucao: string | null
+          status: string | null
+          tecnico: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          data_analise?: string | null
+          data_retorno?: string | null
+          defeito_constatado?: string | null
+          encaminhamento?: string | null
+          id?: string
+          lote?: string | null
+          observacoes?: string | null
+          resultado_amostragem?: string | null
+          sn?: string | null
+          solucao?: string | null
+          status?: string | null
+          tecnico?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          data_analise?: string | null
+          data_retorno?: string | null
+          defeito_constatado?: string | null
+          encaminhamento?: string | null
+          id?: string
+          lote?: string | null
+          observacoes?: string | null
+          resultado_amostragem?: string | null
+          sn?: string | null
+          solucao?: string | null
+          status?: string | null
+          tecnico?: string | null
+        }
+        Relationships: []
+      }
       repair_suppliers: {
         Row: {
           created_at: string
@@ -285,12 +441,14 @@ export type Database = {
           defeitos_identificados: string | null
           destino: string | null
           destino_reparo: string | null
+          equipment_id: string | null
           id: string
           nome: string | null
           observacoes: string | null
           resultado: string | null
           resultado_final: string | null
           serial_number: string | null
+          sn: string | null
           testado_por: string | null
         }
         Insert: {
@@ -307,12 +465,14 @@ export type Database = {
           defeitos_identificados?: string | null
           destino?: string | null
           destino_reparo?: string | null
+          equipment_id?: string | null
           id?: string
           nome?: string | null
           observacoes?: string | null
           resultado?: string | null
           resultado_final?: string | null
           serial_number?: string | null
+          sn?: string | null
           testado_por?: string | null
         }
         Update: {
@@ -329,12 +489,14 @@ export type Database = {
           defeitos_identificados?: string | null
           destino?: string | null
           destino_reparo?: string | null
+          equipment_id?: string | null
           id?: string
           nome?: string | null
           observacoes?: string | null
           resultado?: string | null
           resultado_final?: string | null
           serial_number?: string | null
+          sn?: string | null
           testado_por?: string | null
         }
         Relationships: []
