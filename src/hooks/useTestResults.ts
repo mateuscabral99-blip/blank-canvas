@@ -112,8 +112,14 @@ export function useTestResults() {
       queryClient.invalidateQueries({ queryKey: ["equipamentos"] });
       toast.success("Resultados importados com sucesso!");
     },
-    onError: (error) => {
-      console.error(error);
+    onError: (error: any) => {
+      console.error("Erro completo ao importar resultados (Supabase):", {
+        message: error?.message,
+        code: error?.code,
+        details: error?.details,
+        hint: error?.hint,
+        error: error
+      });
       toast.error("Erro ao importar resultados.");
     },
   });
