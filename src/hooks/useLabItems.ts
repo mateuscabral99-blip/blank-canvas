@@ -38,7 +38,7 @@ export function useLabItems() {
         valor_estimado: data.valor_estimado,
         data_entrada: data.data_entrada,
         conferente: data.conferente,
-        conferido_por: data.conferido_por,
+        
         status_final,
         acao_recomendada,
         created_by: user?.email || "",
