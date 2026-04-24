@@ -21,13 +21,13 @@ export function useLabItems() {
       
       // Map database fields to the LabItem type used in the frontend
       return (data as any[]).map(item => {
-        const rawOrigem = (item.origem || item.origem_fluxo || "").trim().toLowerCase();
+        const rawOrigem = (item.origem || "").trim().toLowerCase();
         // Strict mapping: anything containing 'reversa' is 'Reversa', everything else is 'Desconexão'
         const mappedOrigem = rawOrigem.includes("reversa") ? "Reversa" : "Desconexão";
         
         return {
           ...item,
-          sn: item.serial_number || "",
+          sn: item.sn || "",
           conferente: item.conferido_por || "",
           origem: mappedOrigem,
         };
@@ -41,12 +41,11 @@ export function useLabItems() {
       const { error } = await supabase.from("equipamentos").insert({
         codigo: data.codigo,
         modelo_id: (data as any).modelo_id, // preserve if exists
-        serial_number: data.sn,
+        sn: data.sn,
         nome: data.nome,
         categoria: data.categoria,
         interesse: data.interesse,
         origem: data.origem,
-        origem_fluxo: data.origem_fluxo,
         status_teste: data.status_teste,
         dias_estoque: data.dias_estoque,
         valor_estimado: data.valor_estimado,
@@ -56,7 +55,7 @@ export function useLabItems() {
         status_final,
         acao_recomendada,
         created_by: user?.email || "",
-      });
+      } as any); // Cast to any to avoid type check issues with stale generated types
       if (error) throw error;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["lab_items"] }),
@@ -98,17 +97,15 @@ export function useLabItems() {
 
       const rows = batch.map((data) => {
         const { status_final, acao_recomendada } = calcularStatus(data);
-        const normalizedOrigem = normalizeOrigem(data.origem || data.origem_fluxo);
+        const normalizedOrigem = normalizeOrigem(data.origem || (data as any).origem_fluxo);
         
         return {
           codigo: (data.codigo || "").trim(),
-          serial_number: (data.sn || "").trim(),
+          sn: (data.sn || "").trim(),
           nome: (data.nome || "").trim(),
           categoria: (data.categoria || "Interesse").trim(),
           interesse: data.interesse,
           origem: normalizedOrigem,
-          // DB requires origem_fluxo to be 'qualidade' or 'reversa'
-          origem_fluxo: normalizedOrigem.toLowerCase() === "reversa" ? "reversa" : "qualidade",
           status_teste: normalizeStatusTeste(data.status_teste),
           dias_estoque: data.dias_estoque ?? 0,
           valor_estimado: data.valor_estimado ?? 0,
@@ -133,14 +130,14 @@ export function useLabItems() {
       }
 
       // Try bulk insert first
-      const { error } = await supabase.from("equipamentos").insert(rows);
+      const { error } = await supabase.from("equipamentos").insert(rows as any);
       if (!error) return rows.length;
 
       console.error("[importBatch] Bulk insert failed:", error);
 
       // Fallback: insert one by one to identify the offending row
       for (let i = 0; i < rows.length; i++) {
-        const { error: rowError } = await supabase.from("equipamentos").insert(rows[i]);
+        const { error: rowError } = await supabase.from("equipamentos").insert(rows[i] as any);
         if (rowError) {
           console.error(`[importBatch] Row ${i + 2} failed:`, rowError, rows[i]);
           throw new Error(

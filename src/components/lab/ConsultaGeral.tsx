@@ -98,7 +98,7 @@ export function ConsultaGeral() {
     setSearched(true);
     try {
       const [labRes, testRes, repairRes] = await Promise.all([
-        supabase.from("equipamentos").select("serial_number,nome,codigo,origem,created_at,data_entrada").in("serial_number", sns),
+        (supabase.from("equipamentos") as any).select("sn,nome,codigo,origem,created_at,data_entrada").in("sn", sns),
         supabase.from("test_results").select("sn,resultado,destino_reparo,data_teste,created_at,nome,codigo").in("sn", sns),
         supabase.from("repair_returns").select("sn,encaminhamento,resultado_amostragem,created_at").in("sn", sns),
       ]);
@@ -115,7 +115,7 @@ export function ConsultaGeral() {
 
         // Stage: ENTRADA
         (labRes.data || [])
-          .filter((r: any) => r.serial_number === sn)
+          .filter((r: any) => r.sn === sn)
           .forEach((r: any) => {
             nome = nome || r.nome;
             codigo = codigo || r.codigo;

@@ -107,10 +107,10 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
       // Collect unique SNs and validate against lab_items (entradas)
       const uniqueSns = [...new Set(rows.map((r) => r.sn))];
 
-      const { data: labEntries, error } = await supabase
-        .from("equipamentos")
-        .select("serial_number, codigo, nome")
-        .in("serial_number", uniqueSns);
+      const { data: labEntries, error } = await (supabase
+        .from("equipamentos") as any)
+        .select("sn, codigo, nome")
+        .in("sn", uniqueSns);
 
       if (error) {
         toast.error("Erro ao verificar entradas no banco de dados.");
@@ -121,7 +121,7 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
       // Build lookup map
       const snMap = new Map<string, { codigo: string; nome: string }>();
       (labEntries || []).forEach((entry: any) => {
-        snMap.set(entry.serial_number, { codigo: entry.codigo, nome: entry.nome });
+        snMap.set(entry.sn, { codigo: entry.codigo, nome: entry.nome });
       });
 
       const batch: NewTestResult[] = [];

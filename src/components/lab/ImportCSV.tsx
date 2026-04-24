@@ -181,7 +181,6 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
         categoria,
         interesse,
         origem: origemVal,
-        origem_fluxo: origemVal === "Reversa" ? "reversa" : "qualidade",
         status_teste: "pendente",
         dias_estoque: 0,
         valor_estimado: 0,
