@@ -378,7 +378,7 @@ export function InventarioLab({ items, userRole }: Props) {
                   <TableRow key={i.id}>
                     <TableCell className="whitespace-nowrap text-xs">{i.data_entrada}</TableCell>
                     <TableCell className="font-mono text-xs">{i.sn}</TableCell>
-                    <TableCell className="font-mono text-xs">{i.codigo}</TableCell>
+                    <TableCell className="font-mono text-xs">{i.modelo || i.codigo}</TableCell>
                     <TableCell className="text-xs">{i.nome}</TableCell>
                     <TableCell className="text-xs">{i.categoria}</TableCell>
                     <TableCell>
