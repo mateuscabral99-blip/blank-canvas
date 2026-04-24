@@ -283,7 +283,7 @@ export function RelatorioEntradas({ userRole }: Props) {
                     <TableRow key={i.id}>
                       <TableCell className="whitespace-nowrap">{i.data_entrada}</TableCell>
                       <TableCell>{i.sn}</TableCell>
-                      <TableCell className="font-mono">{i.modelo || "-"}</TableCell>
+                      <TableCell className="font-mono">{i.codigo || "-"}</TableCell>
                       <TableCell>{i.nome}</TableCell>
                       <TableCell>{i.categoria}</TableCell>
                       <TableCell>{i.origem}</TableCell>
