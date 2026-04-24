@@ -177,11 +177,11 @@ export function GestaoUsuarios() {
               </TableHeader>
               <TableBody>
                 {users.map(u => (
-                  <TableRow key={u.id}>
+                  <TableRow key={u.user_id}>
                     <TableCell className="font-medium">{u.nome || "—"}</TableCell>
                     <TableCell className="text-muted-foreground text-sm">{u.email}</TableCell>
                     <TableCell>
-                      <Select defaultValue={u.role} onValueChange={v => handleRoleChange(u.id, v)}>
+                      <Select defaultValue={u.role} onValueChange={v => handleRoleChange(u.user_id, v)}>
                         <SelectTrigger className="w-[140px] h-8 text-xs">
                           <SelectValue>{badge(u.role)}</SelectValue>
                         </SelectTrigger>
