@@ -5,6 +5,7 @@ export interface LabItem {
   nome: string;
   categoria: string;
   interesse: boolean;
+  origem?: string;
   origem_fluxo: "qualidade" | "reversa";
   status_teste: "aprovado" | "reprovado" | "pendente";
   dias_estoque: number;
@@ -12,6 +13,7 @@ export interface LabItem {
   status_final: string;
   acao_recomendada: string;
   data_entrada: string;
+  conferente?: string;
   conferido_por: string;
   created_at: string;
 }

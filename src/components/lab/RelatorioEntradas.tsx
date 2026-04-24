@@ -37,6 +37,7 @@ export function RelatorioEntradas({ userRole }: Props) {
   const [filterNome, setFilterNome] = useState("all");
   const [filterDestino, setFilterDestino] = useState("all");
   const [filterConferente, setFilterConferente] = useState("all");
+  const [filterOrigem, setFilterOrigem] = useState("all");
   const [search, setSearch] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [page, setPage] = useState(1);
@@ -44,7 +45,8 @@ export function RelatorioEntradas({ userRole }: Props) {
   const uniqueCategorias = useMemo(() => [...new Set(items.map(i => i.categoria).filter(Boolean))], [items]);
   const uniqueNomes = useMemo(() => [...new Set(items.map(i => i.nome).filter(Boolean))], [items]);
   const uniqueDestinos = useMemo(() => [...new Set(items.map(i => getDestino(i)).filter(Boolean))], [items]);
-  const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferido_por).filter(Boolean))], [items]);
+  const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferente).filter(Boolean))], [items]);
+  const uniqueOrigens = useMemo(() => [...new Set(items.map(i => i.origem).filter(Boolean))], [items]);
 
   const filtered = useMemo(() => {
     return items.filter(i => {
@@ -53,7 +55,8 @@ export function RelatorioEntradas({ userRole }: Props) {
       if (filterCategoria !== "all" && i.categoria !== filterCategoria) return false;
       if (filterNome !== "all" && i.nome !== filterNome) return false;
       if (filterDestino !== "all" && getDestino(i) !== filterDestino) return false;
-      if (filterConferente !== "all" && i.conferido_por !== filterConferente) return false;
+      if (filterConferente !== "all" && i.conferente !== filterConferente) return false;
+      if (filterOrigem !== "all" && i.origem !== filterOrigem) return false;
       if (search) {
         const s = search.toLowerCase();
         if (
@@ -64,7 +67,7 @@ export function RelatorioEntradas({ userRole }: Props) {
       }
       return true;
     });
-  }, [items, dateFrom, dateTo, filterCategoria, filterNome, filterDestino, filterConferente, search]);
+  }, [items, dateFrom, dateTo, filterCategoria, filterNome, filterDestino, filterConferente, filterOrigem, search]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const paginated = filtered.slice((page - 1) * itemsPerPage, page * itemsPerPage);
@@ -92,9 +95,9 @@ export function RelatorioEntradas({ userRole }: Props) {
 
   function exportDetailCSV() {
     if (!canExport) return;
-    const header = "ID,Data Entrada,SN,Codigo,Nome,Categoria,Destino,Conferente\n";
+    const header = "ID,Data Entrada,SN,Codigo,Nome,Categoria,Origem,Destino,Conferente\n";
     const rows = filtered.map(i =>
-      [i.id, i.data_entrada, i.sn, i.codigo, i.nome, i.categoria, getDestino(i), i.conferido_por]
+      [i.id, i.data_entrada, i.sn, i.codigo, i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
         .map(v => `"${(String(v || "")).replace(/"/g, '""')}"`)
         .join(",")
     ).join("\n");
@@ -188,6 +191,16 @@ export function RelatorioEntradas({ userRole }: Props) {
               </Select>
             </div>
             <div>
+              <Label className="text-xs">Origem</Label>
+              <Select value={filterOrigem} onValueChange={v => { setFilterOrigem(v); setPage(1); }}>
+                <SelectTrigger><SelectValue placeholder="Selecione as opções" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todas</SelectItem>
+                  {uniqueOrigens.map(o => <SelectItem key={o} value={o}>{o}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
               <Label className="text-xs">Busca por Serial/Código</Label>
               <Input placeholder="Buscar..." value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} />
             </div>
@@ -251,6 +264,7 @@ export function RelatorioEntradas({ userRole }: Props) {
                   <TableHead>Código</TableHead>
                   <TableHead>Nome</TableHead>
                   <TableHead>Categoria</TableHead>
+                  <TableHead>Origem</TableHead>
                   <TableHead>Destino</TableHead>
                   <TableHead>Conferente</TableHead>
                 </TableRow>
@@ -258,7 +272,7 @@ export function RelatorioEntradas({ userRole }: Props) {
               <TableBody>
                 {paginated.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center text-muted-foreground py-8">Nenhum registro encontrado.</TableCell>
+                    <TableCell colSpan={8} className="text-center text-muted-foreground py-8">Nenhum registro encontrado.</TableCell>
                   </TableRow>
                 ) : (
                   paginated.map(i => (
@@ -268,8 +282,9 @@ export function RelatorioEntradas({ userRole }: Props) {
                       <TableCell>{i.codigo}</TableCell>
                       <TableCell>{i.nome}</TableCell>
                       <TableCell>{i.categoria}</TableCell>
+                      <TableCell>{i.origem}</TableCell>
                       <TableCell>{getDestino(i)}</TableCell>
-                      <TableCell>{i.conferido_por}</TableCell>
+                      <TableCell>{i.conferente}</TableCell>
                     </TableRow>
                   ))
                 )}
