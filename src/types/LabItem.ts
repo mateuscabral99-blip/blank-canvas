@@ -14,7 +14,6 @@ export interface LabItem {
   acao_recomendada: string;
   data_entrada: string;
   conferente?: string;
-  conferido_por: string;
   created_at: string;
 }
 

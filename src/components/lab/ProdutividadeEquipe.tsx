@@ -69,9 +69,9 @@ export function ProdutividadeEquipe() {
       else map[tech].repairOrObsolete++;
     });
 
-    // Count entries by conferido_por
+    // Count entries by conferente
     filteredItems.forEach((i) => {
-      const tech = i.conferido_por?.trim();
+      const tech = i.conferente?.trim();
       if (!tech) return;
       ensure(tech);
       map[tech].entriesNew++;

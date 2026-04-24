@@ -21,7 +21,7 @@ interface Props {
   userRole?: string | null;
 }
 
-type SortKey = "data_entrada" | "sn" | "codigo" | "nome" | "categoria" | "origem_fluxo" | "destino" | "conferido_por";
+type SortKey = "data_entrada" | "sn" | "codigo" | "nome" | "categoria" | "origem" | "destino" | "conferente";
 type SortDir = "asc" | "desc";
 
 const ORIGIN_LABELS: Record<string, string> = {
@@ -62,7 +62,7 @@ export function InventarioLab({ items, userRole }: Props) {
   const uniqueCategorias = useMemo(() => [...new Set(items.map(i => i.categoria).filter(Boolean))], [items]);
   const uniqueNomes = useMemo(() => [...new Set(items.map(i => i.nome).filter(Boolean))], [items]);
   const uniqueDestinos = useMemo(() => [...new Set(items.map(i => getDestino(i)).filter(Boolean))], [items]);
-  const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferido_por).filter(Boolean))], [items]);
+  const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferente).filter(Boolean))], [items]);
 
   const filtered = useMemo(() => {
     return items.filter(i => {
@@ -71,7 +71,7 @@ export function InventarioLab({ items, userRole }: Props) {
       if (filterCategoria !== "all" && i.categoria !== filterCategoria) return false;
       if (filterNome !== "all" && i.nome !== filterNome) return false;
       if (filterDestino !== "all" && getDestino(i) !== filterDestino) return false;
-      if (filterConferente !== "all" && i.conferido_por !== filterConferente) return false;
+      if (filterConferente !== "all" && i.conferente !== filterConferente) return false;
       if (search) {
         const s = search.toLowerCase();
         if (!i.sn.toLowerCase().includes(s) && !i.codigo.toLowerCase().includes(s) && !i.nome.toLowerCase().includes(s)) return false;
@@ -98,15 +98,15 @@ export function InventarioLab({ items, userRole }: Props) {
 
   const volumeByOrigin = useMemo(() => {
     const map = new Map<string, number>();
-    filtered.forEach((i) => {
-      const origin = mapOriginLabel(i.origem_fluxo || "Não informado");
+    items.forEach((i) => {
+      const origin = i.origem || "Não informado";
       map.set(origin, (map.get(origin) || 0) + 1);
     });
     return [...map.entries()]
       .map(([origem, count]) => ({ origem, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 10);
-  }, [filtered]);
+  }, [items]);
 
   const totalPages = Math.max(1, Math.ceil(sorted.length / itemsPerPage));
   const paginated = sorted.slice((page - 1) * itemsPerPage, page * itemsPerPage);
@@ -146,7 +146,7 @@ export function InventarioLab({ items, userRole }: Props) {
     if (!canExport) return;
     const header = "Data Entrada,SN,Código,Nome,Categoria,Origem,Destino,Conferente\n";
     const rows = filtered.map(i =>
-      [i.data_entrada, i.sn, i.codigo, i.nome, i.categoria, i.origem_fluxo, getDestino(i), i.conferido_por]
+      [i.data_entrada, i.sn, i.codigo, i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
         .map(v => `"${(String(v || "")).replace(/"/g, '""')}"`)
         .join(",")
     ).join("\n");
@@ -360,9 +360,9 @@ export function InventarioLab({ items, userRole }: Props) {
                 <SortHeader label="Código" field="codigo" />
                 <SortHeader label="Nome" field="nome" />
                 <SortHeader label="Categoria" field="categoria" />
-                <SortHeader label="Origem" field="origem_fluxo" />
+                <SortHeader label="Origem" field="origem" />
                 <SortHeader label="Destino" field="destino" />
-                <SortHeader label="Conferente" field="conferido_por" />
+                <SortHeader label="Conferente" field="conferente" />
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -378,8 +378,8 @@ export function InventarioLab({ items, userRole }: Props) {
                     <TableCell className="text-xs">{i.nome}</TableCell>
                     <TableCell className="text-xs">{i.categoria}</TableCell>
                     <TableCell>
-                      <Badge variant="outline" className={`text-[10px] font-medium ${originBadgeColor(i.origem_fluxo)}`}>
-                        {mapOriginLabel(i.origem_fluxo)}
+                      <Badge variant="outline" className={`text-[10px] font-medium ${originBadgeColor(i.origem)}`}>
+                        {i.origem}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -387,7 +387,7 @@ export function InventarioLab({ items, userRole }: Props) {
                         {destino}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-xs">{i.conferido_por}</TableCell>
+                    <TableCell className="text-xs">{i.conferente}</TableCell>
                   </TableRow>
                 );
               })}

@@ -38,7 +38,7 @@ export function useLabItems() {
         valor_estimado: data.valor_estimado,
         data_entrada: data.data_entrada,
         conferente: data.conferente,
-        conferido_por: data.conferido_por,
+        
         status_final,
         acao_recomendada,
         created_by: user?.email || "",
@@ -89,11 +89,13 @@ export function useLabItems() {
           categoria: (data.categoria || "Interesse").trim(),
           interesse: data.interesse,
           origem_fluxo: normalizeOrigemFluxo(data.origem_fluxo),
+          origem: data.origem,
           status_teste: normalizeStatusTeste(data.status_teste),
           dias_estoque: data.dias_estoque ?? 0,
           valor_estimado: data.valor_estimado ?? 0,
           data_entrada: normalizeDate(data.data_entrada),
-          conferido_por: (data.conferido_por || "").trim(),
+          conferente: data.conferente,
+          
           status_final,
           acao_recomendada: acao_recomendada || "",
           created_by: user?.email || "",
