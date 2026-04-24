@@ -109,8 +109,8 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
 
       const { data: labEntries, error } = await supabase
         .from("equipamentos")
-        .select("serial_number, codigo, nome")
-        .in("serial_number", uniqueSns);
+        .select("sn, codigo, nome")
+        .in("sn", uniqueSns);
 
       if (error) {
         toast.error("Erro ao verificar entradas no banco de dados.");
