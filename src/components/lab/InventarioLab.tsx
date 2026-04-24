@@ -100,8 +100,7 @@ export function InventarioLab({ items, userRole }: Props) {
       let origin = (i.origem || "").trim();
       if (!origin) return;
       
-      // Normalize casing for grouping
-      const key = origin.charAt(0).toUpperCase() + origin.slice(1).toLowerCase();
+      const key = origin;
       map.set(key, (map.get(key) || 0) + 1);
     });
     return [...map.entries()]
