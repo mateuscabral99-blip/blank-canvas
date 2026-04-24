@@ -89,6 +89,10 @@ export default function Index() {
   const { role } = useUserRole();
   const { displayName, email } = useUserProfile();
   const [tab, setTab] = useState("dashboard");
+  
+  useEffect(() => {
+    refetch();
+  }, []);
   const [pipelineFilter, setPipelineFilter] = useState<string | undefined>(undefined);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     "Painel de Controle": true,
