@@ -56,6 +56,8 @@ export function EntradaLabForm({ onAdd, onImportBatch, isBatchLoading }: Props) 
     const trimmed = code.trim();
     if (!trimmed) {
       setAutoFilled(false);
+      setNome("");
+      setClassificacao("");
       return;
     }
 
