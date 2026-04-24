@@ -101,7 +101,7 @@ export function RelatorioEntradas({ userRole }: Props) {
     if (!canExport) return;
     const header = "ID,Data Entrada,SN,Codigo,Nome,Categoria,Origem,Destino,Conferente\n";
     const rows = filtered.map(i =>
-      [i.id, i.data_entrada, i.sn, i.modelo || i.codigo, i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
+      [i.id, i.data_entrada, i.sn, i.modelo || "", i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
         .map(v => `"${(String(v || "")).replace(/"/g, '""')}"`)
         .join(",")
     ).join("\n");
