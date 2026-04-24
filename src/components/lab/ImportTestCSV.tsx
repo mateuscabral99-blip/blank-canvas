@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 export interface NewTestResult {
+  equipment_id: string;
   sn: string;
   codigo: string;
   nome: string;
