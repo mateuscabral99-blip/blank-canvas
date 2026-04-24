@@ -82,7 +82,7 @@ const roleBadgeColor: Record<string, string> = {
 };
 
 export default function Index() {
-  const { items, addItem, addBatch, deleteItem, isBatchLoading } = useLabItems();
+  const { items, addItem, addBatch, deleteItem, isBatchLoading, refetch } = useLabItems();
   const { modelos, addModelo, addBatchModelos, deleteModelo } = useCadastroModelos();
   const { user, signOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
