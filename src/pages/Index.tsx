@@ -261,6 +261,15 @@ export default function Index() {
           >
             {sidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-9 w-9 shrink-0"
+            onClick={() => refetch()}
+            title="Atualizar dados"
+          >
+            <RotateCcw className="h-4 w-4" />
+          </Button>
           <div className="flex items-center gap-2">
             {currentPage?.icon && <span className="text-primary">{currentPage.icon}</span>}
             <h1 className="text-base font-semibold tracking-tight">
