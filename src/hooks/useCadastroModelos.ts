@@ -35,6 +35,7 @@ export function useCadastroModelos() {
         codigo: data.codigo,
         nome: data.nome,
         categoria: data.categoria,
+        classificacao: data.categoria, // Duplicate for consistency
         valor_unitario: data.valor_unitario,
       });
       if (error) throw error;
