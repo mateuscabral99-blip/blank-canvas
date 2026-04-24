@@ -1,0 +1,4 @@
+Codigo,Serial,Categoria,Origem,Destinacao,Conferido Por,Data Entrada
+IM-00123,SN-ABC12345,Interesse,Reversa,Teste,Mateus Mendes,2025-04-09
+IM-00124,SN-DEF67890,Não Interesse,Desconexão,Obsoleto,João Victor,2025-04-09
+IM-00125,SN-GHI11223,Interesse,Reversa,Teste,Mateus Mendes,2025-04-10

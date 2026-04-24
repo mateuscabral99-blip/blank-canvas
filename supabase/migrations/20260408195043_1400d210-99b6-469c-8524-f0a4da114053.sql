@@ -1,0 +1,1 @@
+ALTER TABLE public.test_results ADD COLUMN data_teste date NOT NULL DEFAULT CURRENT_DATE;

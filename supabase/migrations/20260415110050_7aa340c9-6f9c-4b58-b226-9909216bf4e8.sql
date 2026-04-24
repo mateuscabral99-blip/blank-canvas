@@ -1,0 +1,1 @@
+ALTER TABLE public.test_results ADD COLUMN destino_reparo text NOT NULL DEFAULT '';

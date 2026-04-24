@@ -1,0 +1,1 @@
+ALTER TABLE public.lab_items ADD COLUMN sn text NOT NULL DEFAULT '';
