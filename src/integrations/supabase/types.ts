@@ -235,6 +235,7 @@ export type Database = {
         Row: {
           acao_recomendada: string | null
           categoria: string | null
+          classificacao: string | null
           codigo: string | null
           codigo_interno: string | null
           codigo_item: string | null
@@ -255,7 +256,6 @@ export type Database = {
           id: string
           interesse: boolean | null
           localizacao: string | null
-          modelo: string | null
           nome: string | null
           observacoes: string | null
           origem: string | null
@@ -280,6 +280,7 @@ export type Database = {
         Insert: {
           acao_recomendada?: string | null
           categoria?: string | null
+          classificacao?: string | null
           codigo?: string | null
           codigo_interno?: string | null
           codigo_item?: string | null
@@ -300,7 +301,6 @@ export type Database = {
           id?: string
           interesse?: boolean | null
           localizacao?: string | null
-          modelo?: string | null
           nome?: string | null
           observacoes?: string | null
           origem?: string | null
@@ -325,6 +325,7 @@ export type Database = {
         Update: {
           acao_recomendada?: string | null
           categoria?: string | null
+          classificacao?: string | null
           codigo?: string | null
           codigo_interno?: string | null
           codigo_item?: string | null
@@ -345,7 +346,6 @@ export type Database = {
           id?: string
           interesse?: boolean | null
           localizacao?: string | null
-          modelo?: string | null
           nome?: string | null
           observacoes?: string | null
           origem?: string | null
