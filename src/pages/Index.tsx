@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   LayoutDashboard, Kanban, Package, LogIn, LogOut,
   ClipboardCheck, ClipboardList, BarChart3, ChevronDown, ChevronRight,
-  Settings, Briefcase, Monitor, AlertTriangle, Menu, X, Wrench, Users,
+  Settings, Briefcase, Monitor, AlertTriangle, Menu, X, Wrench, Users, RotateCcw,
   Sun, Moon, Search,
 } from "lucide-react";
 import { ConsultaGeral } from "@/components/lab/ConsultaGeral";
