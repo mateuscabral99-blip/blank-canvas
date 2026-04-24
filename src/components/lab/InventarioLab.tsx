@@ -66,6 +66,9 @@ export function InventarioLab({ items, userRole }: Props) {
 
   const filtered = useMemo(() => {
     return items.filter(i => {
+      // Excluir modelos de teste
+      if (i.modelo === 'Test Model 001' || i.sn === 'SN-FINAL-TEST-001') return false;
+
       if (dateFrom && i.data_entrada < dateFrom) return false;
       if (dateTo && i.data_entrada > dateTo) return false;
       if (filterCategoria !== "all" && i.categoria !== filterCategoria) return false;
@@ -74,7 +77,8 @@ export function InventarioLab({ items, userRole }: Props) {
       if (filterConferente !== "all" && i.conferente !== filterConferente) return false;
       if (search) {
         const s = search.toLowerCase();
-        if (!i.sn.toLowerCase().includes(s) && !i.codigo.toLowerCase().includes(s) && !i.nome.toLowerCase().includes(s)) return false;
+        const codigoSearch = (i.modelo || i.codigo || "").toLowerCase();
+        if (!i.sn.toLowerCase().includes(s) && !codigoSearch.includes(s) && !i.nome.toLowerCase().includes(s)) return false;
       }
       return true;
     });
@@ -146,7 +150,7 @@ export function InventarioLab({ items, userRole }: Props) {
     if (!canExport) return;
     const header = "Data Entrada,SN,Código,Nome,Categoria,Origem,Destino,Conferente\n";
     const rows = filtered.map(i =>
-      [i.data_entrada, i.sn, i.codigo, i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
+      [i.data_entrada, i.sn, i.modelo || i.codigo, i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
         .map(v => `"${(String(v || "")).replace(/"/g, '""')}"`)
         .join(",")
     ).join("\n");
@@ -374,7 +378,7 @@ export function InventarioLab({ items, userRole }: Props) {
                   <TableRow key={i.id}>
                     <TableCell className="whitespace-nowrap text-xs">{i.data_entrada}</TableCell>
                     <TableCell className="font-mono text-xs">{i.sn}</TableCell>
-                    <TableCell className="font-mono text-xs">{i.codigo}</TableCell>
+                    <TableCell className="font-mono text-xs">{i.modelo || i.codigo}</TableCell>
                     <TableCell className="text-xs">{i.nome}</TableCell>
                     <TableCell className="text-xs">{i.categoria}</TableCell>
                     <TableCell>

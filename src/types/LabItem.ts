@@ -1,6 +1,7 @@
 export interface LabItem {
   id: string;
   codigo: string;
+  modelo?: string;
   sn: string;
   nome: string;
   categoria: string;

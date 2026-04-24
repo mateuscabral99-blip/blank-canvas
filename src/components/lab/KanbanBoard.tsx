@@ -196,6 +196,7 @@ export function KanbanBoard({ items, isAdmin, onNavigateToLaudo }: Props) {
     const snMap = new Map<string, LabItem>();
     const noSn: LabItem[] = [];
     for (const item of items) {
+      if (item.modelo === 'Test Model 001' || item.sn === 'SN-FINAL-TEST-001') continue;
       const key = item.sn?.trim().toUpperCase();
       if (!key) { noSn.push(item); continue; }
       const existing = snMap.get(key);
@@ -212,7 +213,7 @@ export function KanbanBoard({ items, isAdmin, onNavigateToLaudo }: Props) {
       if (filterClassification !== "all") {
         if (!normalizeText(item.nome).toUpperCase().includes(filterClassification.toUpperCase())) return false;
       }
-      if (q && !normalizeText(item.nome).includes(q) && !normalizeText(item.sn).includes(q) && !normalizeText(item.codigo).includes(q)) return false;
+      if (q && !normalizeText(item.nome).includes(q) && !normalizeText(item.sn).includes(q) && !normalizeText(item.modelo || item.codigo).includes(q)) return false;
       return true;
     });
   }, [deduped, filterClassification, searchQuery]);
@@ -251,7 +252,7 @@ export function KanbanBoard({ items, isAdmin, onNavigateToLaudo }: Props) {
             key,
             nome: item.nome || "Sem modelo",
             categoria: item.categoria || "",
-            codigo: item.codigo || "",
+            codigo: item.modelo || item.codigo || "",
             items: [item],
             oldestHours: itemHours,
             minReturnDays: returnDays,

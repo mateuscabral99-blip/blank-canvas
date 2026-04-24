@@ -50,6 +50,9 @@ export function RelatorioEntradas({ userRole }: Props) {
 
   const filtered = useMemo(() => {
     return items.filter(i => {
+      // Excluir modelos de teste
+      if (i.modelo === 'Test Model 001' || i.sn === 'SN-FINAL-TEST-001') return false;
+
       if (dateFrom && i.data_entrada < dateFrom) return false;
       if (dateTo && i.data_entrada > dateTo) return false;
       if (filterCategoria !== "all" && i.categoria !== filterCategoria) return false;
@@ -59,9 +62,10 @@ export function RelatorioEntradas({ userRole }: Props) {
       if (filterOrigem !== "all" && i.origem !== filterOrigem) return false;
       if (search) {
         const s = search.toLowerCase();
+        const codigoSearch = (i.modelo || i.codigo || "").toLowerCase();
         if (
           !i.sn.toLowerCase().includes(s) &&
-          !i.codigo.toLowerCase().includes(s) &&
+          !codigoSearch.includes(s) &&
           !i.nome.toLowerCase().includes(s)
         ) return false;
       }
@@ -97,7 +101,7 @@ export function RelatorioEntradas({ userRole }: Props) {
     if (!canExport) return;
     const header = "ID,Data Entrada,SN,Codigo,Nome,Categoria,Origem,Destino,Conferente\n";
     const rows = filtered.map(i =>
-      [i.id, i.data_entrada, i.sn, i.codigo, i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
+      [i.id, i.data_entrada, i.sn, i.modelo || i.codigo, i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
         .map(v => `"${(String(v || "")).replace(/"/g, '""')}"`)
         .join(",")
     ).join("\n");
@@ -279,7 +283,7 @@ export function RelatorioEntradas({ userRole }: Props) {
                     <TableRow key={i.id}>
                       <TableCell className="whitespace-nowrap">{i.data_entrada}</TableCell>
                       <TableCell>{i.sn}</TableCell>
-                      <TableCell>{i.codigo}</TableCell>
+                      <TableCell>{i.modelo || i.codigo}</TableCell>
                       <TableCell>{i.nome}</TableCell>
                       <TableCell>{i.categoria}</TableCell>
                       <TableCell>{i.origem}</TableCell>
