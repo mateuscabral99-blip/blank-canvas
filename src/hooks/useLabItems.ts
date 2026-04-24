@@ -97,17 +97,15 @@ export function useLabItems() {
 
       const rows = batch.map((data) => {
         const { status_final, acao_recomendada } = calcularStatus(data);
-        const normalizedOrigem = normalizeOrigem(data.origem || data.origem_fluxo);
+        const normalizedOrigem = normalizeOrigem(data.origem || (data as any).origem_fluxo);
         
         return {
           codigo: (data.codigo || "").trim(),
-          serial_number: (data.sn || "").trim(),
+          sn: (data.sn || "").trim(),
           nome: (data.nome || "").trim(),
           categoria: (data.categoria || "Interesse").trim(),
           interesse: data.interesse,
           origem: normalizedOrigem,
-          // DB requires origem_fluxo to be 'qualidade' or 'reversa'
-          origem_fluxo: normalizedOrigem.toLowerCase() === "reversa" ? "reversa" : "qualidade",
           status_teste: normalizeStatusTeste(data.status_teste),
           dias_estoque: data.dias_estoque ?? 0,
           valor_estimado: data.valor_estimado ?? 0,
@@ -132,14 +130,14 @@ export function useLabItems() {
       }
 
       // Try bulk insert first
-      const { error } = await supabase.from("equipamentos").insert(rows);
+      const { error } = await supabase.from("equipamentos").insert(rows as any);
       if (!error) return rows.length;
 
       console.error("[importBatch] Bulk insert failed:", error);
 
       // Fallback: insert one by one to identify the offending row
       for (let i = 0; i < rows.length; i++) {
-        const { error: rowError } = await supabase.from("equipamentos").insert(rows[i]);
+        const { error: rowError } = await supabase.from("equipamentos").insert(rows[i] as any);
         if (rowError) {
           console.error(`[importBatch] Row ${i + 2} failed:`, rowError, rows[i]);
           throw new Error(
