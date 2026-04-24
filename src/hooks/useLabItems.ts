@@ -84,6 +84,7 @@ export function useLabItems() {
         const { status_final, acao_recomendada } = calcularStatus(data);
         return {
           codigo: (data.codigo || "").trim(),
+          modelo: (data.modelo || "").trim(),
           sn: (data.sn || "").trim(),
           nome: (data.nome || "").trim(),
           categoria: (data.categoria || "Interesse").trim(),
