@@ -297,7 +297,7 @@ export function RelatorioEntradas({ userRole }: Props) {
                       <TableCell className="font-mono">{i.codigo || "-"}</TableCell>
                       <TableCell>{i.nome}</TableCell>
                       <TableCell>{i.categoria}</TableCell>
-                      <TableCell>{i.origem}</TableCell>
+                      <TableCell>{i.origem || "Outros"}</TableCell>
                       <TableCell>{getDestino(i)}</TableCell>
                       <TableCell>{i.conferente}</TableCell>
                     </TableRow>
