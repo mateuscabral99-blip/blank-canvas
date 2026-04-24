@@ -123,8 +123,8 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
     for (let i = 1; i < rows.length; i++) {
       const cols = rows[i].map((c) => (c ?? "").toString());
 
-      const origemFluxo = parseOrigemFluxo(cols[origemIdx] || "");
-      if (!origemFluxo) {
+      const origemVal = mapOrigem(cols[origemIdx] || "");
+      if (!origemVal) {
         toast.error(`Linha ${i + 1}: informe uma Origem válida (Reversa ou Desconexão).`);
         if (inputRef.current) inputRef.current.value = "";
         return;
