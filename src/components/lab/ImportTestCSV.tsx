@@ -107,8 +107,8 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
       // Collect unique SNs and validate against lab_items (entradas)
       const uniqueSns = [...new Set(rows.map((r) => r.sn))];
 
-      const { data: labEntries, error } = await supabase
-        .from("equipamentos")
+      const { data: labEntries, error } = await (supabase
+        .from("equipamentos") as any)
         .select("sn, codigo, nome")
         .in("sn", uniqueSns);
 
