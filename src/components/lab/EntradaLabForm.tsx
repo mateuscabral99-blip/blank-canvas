@@ -93,7 +93,6 @@ export function EntradaLabForm({ onAdd, onImportBatch, isBatchLoading }: Props) 
 
   const buildItem = (serial: string): NewItem => {
     const interesse = destinacao === "Teste";
-    const origemFluxo: "qualidade" | "reversa" = origem === "Desconexão" ? "qualidade" : "reversa";
     return {
       codigo: codigo.trim(),
       modelo: classificacao.trim(),
@@ -102,7 +101,6 @@ export function EntradaLabForm({ onAdd, onImportBatch, isBatchLoading }: Props) 
       categoria,
       interesse,
       origem,
-      origem_fluxo: origemFluxo,
       status_teste: "pendente",
       dias_estoque: 0,
       valor_estimado: 0,
