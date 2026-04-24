@@ -196,6 +196,7 @@ export function KanbanBoard({ items, isAdmin, onNavigateToLaudo }: Props) {
     const snMap = new Map<string, LabItem>();
     const noSn: LabItem[] = [];
     for (const item of items) {
+      if (item.modelo === 'Test Model 001' || item.sn === 'SN-FINAL-TEST-001') continue;
       const key = item.sn?.trim().toUpperCase();
       if (!key) { noSn.push(item); continue; }
       const existing = snMap.get(key);
