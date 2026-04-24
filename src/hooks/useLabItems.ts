@@ -92,13 +92,17 @@ export function useLabItems() {
 
       const rows = batch.map((data) => {
         const { status_final, acao_recomendada } = calcularStatus(data);
+        const normalizedOrigem = normalizeOrigem(data.origem || data.origem_fluxo);
+        
         return {
           codigo: (data.codigo || "").trim(),
           serial_number: (data.sn || "").trim(),
           nome: (data.nome || "").trim(),
           categoria: (data.categoria || "Interesse").trim(),
           interesse: data.interesse,
-          origem: normalizeOrigem(data.origem || data.origem_fluxo),
+          origem: normalizedOrigem,
+          // DB requires origem_fluxo to be 'qualidade' or 'reversa'
+          origem_fluxo: normalizedOrigem.toLowerCase() === "reversa" ? "reversa" : "qualidade",
           status_teste: normalizeStatusTeste(data.status_teste),
           dias_estoque: data.dias_estoque ?? 0,
           valor_estimado: data.valor_estimado ?? 0,
@@ -113,12 +117,12 @@ export function useLabItems() {
 
       // Validate required NOT NULL fields up front so we can pinpoint the row
       const missingIdx = rows.findIndex(
-        (r) => !r.nome || !r.categoria || !r.origem_fluxo || !r.status_teste || !r.status_final
+        (r) => !r.nome || !r.categoria || !r.origem || !r.status_teste || !r.status_final
       );
       if (missingIdx >= 0) {
         const r = rows[missingIdx];
         throw new Error(
-          `Linha ${missingIdx + 2}: campo obrigatório vazio (nome="${r.nome}", categoria="${r.categoria}", origem_fluxo="${r.origem_fluxo}", status_teste="${r.status_teste}", status_final="${r.status_final}")`
+          `Linha ${missingIdx + 2}: campo obrigatório vazio (nome="${r.nome}", categoria="${r.categoria}", origem="${r.origem}", status_teste="${r.status_teste}", status_final="${r.status_final}")`
         );
       }
 
