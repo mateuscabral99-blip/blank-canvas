@@ -171,6 +171,7 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
           observacoes: row.observacoes,
           data_teste: parseDateToISO(row.data_teste),
           testado_por: row.tecnico || fallbackTecnico,
+          destino_reparo: "", // Default to empty for batch imports
         });
       }
 
