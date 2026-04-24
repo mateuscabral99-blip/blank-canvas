@@ -47,16 +47,8 @@ export function RelatorioEntradas({ userRole }: Props) {
   const uniqueDestinos = useMemo(() => [...new Set(items.map(i => getDestino(i)).filter(Boolean))], [items]);
   const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferente).filter(Boolean))], [items]);
   const uniqueOrigens = useMemo(() => {
-    const set = new Set(items.map(i => (i.origem || "Outros").trim()));
-    // Merge variations like 'reversa' and 'Reversa'
-    const normalizedMap = new Map<string, string>();
-    set.forEach(val => {
-      const lower = val.toLowerCase();
-      if (!normalizedMap.has(lower)) {
-        normalizedMap.set(lower, val);
-      }
-    });
-    return Array.from(normalizedMap.values());
+    const set = new Set(items.map(i => (i.origem || "").trim()).filter(Boolean));
+    return Array.from(set);
   }, [items]);
 
   const filtered = useMemo(() => {
@@ -297,7 +289,7 @@ export function RelatorioEntradas({ userRole }: Props) {
                       <TableCell className="font-mono">{i.codigo || "-"}</TableCell>
                       <TableCell>{i.nome}</TableCell>
                       <TableCell>{i.categoria}</TableCell>
-                      <TableCell>{i.origem || "Outros"}</TableCell>
+                      <TableCell>{i.origem}</TableCell>
                       <TableCell>{getDestino(i)}</TableCell>
                       <TableCell>{i.conferente}</TableCell>
                     </TableRow>

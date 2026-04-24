@@ -53,8 +53,7 @@ export function InventarioLab({ items, userRole }: Props) {
   };
 
   const mapOriginLabel = (raw: string) => {
-    if (!raw) return "Não informado";
-    return raw.trim();
+    return (raw || "").trim();
   };
 
   const uniqueCategorias = useMemo(() => [...new Set(items.map(i => i.categoria).filter(Boolean))], [items]);
@@ -98,11 +97,10 @@ export function InventarioLab({ items, userRole }: Props) {
   const volumeByOrigin = useMemo(() => {
     const map = new Map<string, number>();
     items.forEach((i) => {
-      let origin = (i.origem || "Outros").trim();
-      if (origin.toLowerCase() === "não informado") origin = "Outros";
+      let origin = (i.origem || "").trim();
+      if (!origin) return;
       
-      // Normalize casing for grouping
-      const key = origin.charAt(0).toUpperCase() + origin.slice(1).toLowerCase();
+      const key = origin;
       map.set(key, (map.get(key) || 0) + 1);
     });
     return [...map.entries()]
@@ -383,7 +381,7 @@ export function InventarioLab({ items, userRole }: Props) {
                     <TableCell className="text-xs">{i.categoria}</TableCell>
                     <TableCell>
                       <Badge variant="outline" className={`text-[10px] font-medium ${originBadgeColor(i.origem)}`}>
-                        {i.origem || "Outros"}
+                        {i.origem}
                       </Badge>
                     </TableCell>
                     <TableCell>
