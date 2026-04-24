@@ -149,7 +149,7 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
       if (!nomeVal && nomeIdx >= 0) nomeVal = cols[nomeIdx]?.trim() || "";
 
       // Classificação: lookup (auto-enriched) > CSV fallback
-      let classVal = lookup.categoria;
+      let classVal = lookup.classificacao;
       if (!classVal && classIdx >= 0) classVal = cols[classIdx]?.trim() || "";
 
       // Categoria (Interesse / Não Interesse)
