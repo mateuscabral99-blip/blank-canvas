@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { LabItem } from "@/types/LabItem";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package, ClipboardCheck, Ban, UserCheck, FileText, TrendingUp, TrendingDown, Minus, AlertTriangle, RotateCcw, Wrench } from "lucide-react";
+import { Package, ClipboardCheck, Ban, UserCheck, FileText, TrendingUp, TrendingDown, Minus, AlertTriangle, RotateCcw, Wrench, MapPin } from "lucide-react";
 import { countLaudos } from "./LaudoAlerts";
 import {
   ChartContainer,
