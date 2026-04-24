@@ -72,7 +72,9 @@ export type Database = {
           lote_id: string | null
           modelo_id: string | null
           nome: string
+          observacoes_tecnicas: string | null
           origem: string | null
+          prioridade: string | null
           sn: string
           status: string | null
           status_final: string
@@ -104,7 +106,9 @@ export type Database = {
           lote_id?: string | null
           modelo_id?: string | null
           nome: string
+          observacoes_tecnicas?: string | null
           origem?: string | null
+          prioridade?: string | null
           sn?: string
           status?: string | null
           status_final: string
@@ -136,7 +140,9 @@ export type Database = {
           lote_id?: string | null
           modelo_id?: string | null
           nome?: string
+          observacoes_tecnicas?: string | null
           origem?: string | null
+          prioridade?: string | null
           sn?: string
           status?: string | null
           status_final?: string
@@ -573,6 +579,7 @@ export type Database = {
           encaminhamento: string | null
           equipment_id: string | null
           id: string
+          is_warranty_claim: boolean | null
           lote: string | null
           observacoes: string | null
           resultado_amostragem: string | null
@@ -584,6 +591,7 @@ export type Database = {
           tecnico_id: string | null
           updated_at: string | null
           updated_by_id: string | null
+          visual_rating: number | null
         }
         Insert: {
           created_at?: string | null
@@ -594,6 +602,7 @@ export type Database = {
           encaminhamento?: string | null
           equipment_id?: string | null
           id?: string
+          is_warranty_claim?: boolean | null
           lote?: string | null
           observacoes?: string | null
           resultado_amostragem?: string | null
@@ -605,6 +614,7 @@ export type Database = {
           tecnico_id?: string | null
           updated_at?: string | null
           updated_by_id?: string | null
+          visual_rating?: number | null
         }
         Update: {
           created_at?: string | null
@@ -615,6 +625,7 @@ export type Database = {
           encaminhamento?: string | null
           equipment_id?: string | null
           id?: string
+          is_warranty_claim?: boolean | null
           lote?: string | null
           observacoes?: string | null
           resultado_amostragem?: string | null
@@ -626,6 +637,7 @@ export type Database = {
           tecnico_id?: string | null
           updated_at?: string | null
           updated_by_id?: string | null
+          visual_rating?: number | null
         }
         Relationships: [
           {
@@ -722,10 +734,14 @@ export type Database = {
       }
       test_results: {
         Row: {
+          checklist_acesso_web: boolean | null
           checklist_botoes: boolean | null
+          checklist_carcaca: boolean | null
           checklist_firmware: boolean | null
           checklist_fonte: boolean | null
+          checklist_leds: boolean | null
           checklist_portas: boolean | null
+          checklist_portas_lan: boolean | null
           checklist_wifi: boolean | null
           codigo: string | null
           codigo_imanager: string | null
@@ -740,6 +756,7 @@ export type Database = {
           id: string
           nome: string | null
           observacoes: string | null
+          reincidencia_identificada: boolean | null
           resultado: string | null
           resultado_final: string | null
           serial_number: string | null
@@ -750,10 +767,14 @@ export type Database = {
           updated_by_id: string | null
         }
         Insert: {
+          checklist_acesso_web?: boolean | null
           checklist_botoes?: boolean | null
+          checklist_carcaca?: boolean | null
           checklist_firmware?: boolean | null
           checklist_fonte?: boolean | null
+          checklist_leds?: boolean | null
           checklist_portas?: boolean | null
+          checklist_portas_lan?: boolean | null
           checklist_wifi?: boolean | null
           codigo?: string | null
           codigo_imanager?: string | null
@@ -768,6 +789,7 @@ export type Database = {
           id?: string
           nome?: string | null
           observacoes?: string | null
+          reincidencia_identificada?: boolean | null
           resultado?: string | null
           resultado_final?: string | null
           serial_number?: string | null
@@ -778,10 +800,14 @@ export type Database = {
           updated_by_id?: string | null
         }
         Update: {
+          checklist_acesso_web?: boolean | null
           checklist_botoes?: boolean | null
+          checklist_carcaca?: boolean | null
           checklist_firmware?: boolean | null
           checklist_fonte?: boolean | null
+          checklist_leds?: boolean | null
           checklist_portas?: boolean | null
+          checklist_portas_lan?: boolean | null
           checklist_wifi?: boolean | null
           codigo?: string | null
           codigo_imanager?: string | null
@@ -796,6 +822,7 @@ export type Database = {
           id?: string
           nome?: string | null
           observacoes?: string | null
+          reincidencia_identificada?: boolean | null
           resultado?: string | null
           resultado_final?: string | null
           serial_number?: string | null
