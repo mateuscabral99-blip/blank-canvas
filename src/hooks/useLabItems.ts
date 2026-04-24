@@ -165,5 +165,6 @@ export function useLabItems() {
     addBatch: (batch: NewItem[]) => addBatchMutation.mutate(batch),
     deleteItem: (id: string) => deleteMutation.mutate(id),
     isBatchLoading: addBatchMutation.isPending,
+    refetch,
   };
 }
