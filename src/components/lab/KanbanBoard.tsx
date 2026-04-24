@@ -252,7 +252,7 @@ export function KanbanBoard({ items, isAdmin, onNavigateToLaudo }: Props) {
             key,
             nome: item.nome || "Sem modelo",
             categoria: item.categoria || "",
-            codigo: item.codigo || "",
+            codigo: item.modelo || item.codigo || "",
             items: [item],
             oldestHours: itemHours,
             minReturnDays: returnDays,
