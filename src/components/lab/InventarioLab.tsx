@@ -71,7 +71,7 @@ export function InventarioLab({ items, userRole }: Props) {
       if (filterCategoria !== "all" && i.categoria !== filterCategoria) return false;
       if (filterNome !== "all" && i.nome !== filterNome) return false;
       if (filterDestino !== "all" && getDestino(i) !== filterDestino) return false;
-      if (filterConferente !== "all" && i.conferido_por !== filterConferente) return false;
+      if (filterConferente !== "all" && i.conferente !== filterConferente) return false;
       if (search) {
         const s = search.toLowerCase();
         if (!i.sn.toLowerCase().includes(s) && !i.codigo.toLowerCase().includes(s) && !i.nome.toLowerCase().includes(s)) return false;

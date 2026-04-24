@@ -171,7 +171,7 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
       }
 
       const snVal = snIdx >= 0 ? (cols[snIdx]?.trim() || "") : "";
-      const conferido_por = confIdx >= 0 ? (cols[confIdx]?.trim() || "") : "";
+      const conferente = confIdx >= 0 ? (cols[confIdx]?.trim() || "") : "";
       const data_entrada = dataIdx >= 0 && cols[dataIdx] ? cols[dataIdx].trim() : new Date().toISOString().slice(0, 10);
 
       batch.push({
@@ -186,8 +186,8 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
         dias_estoque: 0,
         valor_estimado: 0,
         data_entrada,
-        conferente: conferido_por,
-        conferido_por,
+        conferente: conferente,
+        conferente,
       });
     }
 

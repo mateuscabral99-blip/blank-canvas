@@ -37,7 +37,7 @@ export function ExportCSV({ items }: Props) {
       i.dias_estoque,
       i.status_final,
       i.acao_recomendada,
-      i.conferido_por,
+      i.conferente,
       i.data_entrada,
       new Date(i.created_at).toLocaleDateString("pt-BR"),
     ]);
