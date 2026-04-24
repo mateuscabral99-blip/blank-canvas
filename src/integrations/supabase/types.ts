@@ -59,7 +59,6 @@ export type Database = {
           categoria: string
           classificacao: string | null
           codigo: string
-          codigo_imanager: string | null
           conferido_por: string
           created_at: string
           created_by: string
@@ -74,8 +73,7 @@ export type Database = {
           modelo_id: string | null
           nome: string
           origem: string | null
-          origem_fluxo: string
-          serial_number: string
+          sn: string
           status: string | null
           status_final: string
           status_teste: string
@@ -93,7 +91,6 @@ export type Database = {
           categoria: string
           classificacao?: string | null
           codigo?: string
-          codigo_imanager?: string | null
           conferido_por?: string
           created_at?: string
           created_by?: string
@@ -108,8 +105,7 @@ export type Database = {
           modelo_id?: string | null
           nome: string
           origem?: string | null
-          origem_fluxo: string
-          serial_number?: string
+          sn?: string
           status?: string | null
           status_final: string
           status_teste: string
@@ -127,7 +123,6 @@ export type Database = {
           categoria?: string
           classificacao?: string | null
           codigo?: string
-          codigo_imanager?: string | null
           conferido_por?: string
           created_at?: string
           created_by?: string
@@ -142,8 +137,7 @@ export type Database = {
           modelo_id?: string | null
           nome?: string
           origem?: string | null
-          origem_fluxo?: string
-          serial_number?: string
+          sn?: string
           status?: string | null
           status_final?: string
           status_teste?: string
