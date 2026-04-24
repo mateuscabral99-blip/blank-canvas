@@ -190,6 +190,7 @@ export type Database = {
       item_history: {
         Row: {
           created_at: string
+          created_by_id: string | null
           equipment_id: string | null
           id: string
           observacoes: string | null
@@ -198,9 +199,11 @@ export type Database = {
           status_novo: string | null
           tipo_movimentacao: string
           updated_at: string | null
+          updated_by_id: string | null
         }
         Insert: {
           created_at?: string
+          created_by_id?: string | null
           equipment_id?: string | null
           id?: string
           observacoes?: string | null
@@ -209,9 +212,11 @@ export type Database = {
           status_novo?: string | null
           tipo_movimentacao: string
           updated_at?: string | null
+          updated_by_id?: string | null
         }
         Update: {
           created_at?: string
+          created_by_id?: string | null
           equipment_id?: string | null
           id?: string
           observacoes?: string | null
@@ -220,6 +225,7 @@ export type Database = {
           status_novo?: string | null
           tipo_movimentacao?: string
           updated_at?: string | null
+          updated_by_id?: string | null
         }
         Relationships: [
           {
@@ -437,6 +443,7 @@ export type Database = {
           status_reincidencia: string | null
           tecnico_id: string | null
           updated_at: string
+          updated_by_id: string | null
         }
         Insert: {
           causa_reincidencia?: string | null
@@ -451,6 +458,7 @@ export type Database = {
           status_reincidencia?: string | null
           tecnico_id?: string | null
           updated_at?: string
+          updated_by_id?: string | null
         }
         Update: {
           causa_reincidencia?: string | null
@@ -465,6 +473,7 @@ export type Database = {
           status_reincidencia?: string | null
           tecnico_id?: string | null
           updated_at?: string
+          updated_by_id?: string | null
         }
         Relationships: [
           {
@@ -486,30 +495,36 @@ export type Database = {
       lotes: {
         Row: {
           created_at: string | null
+          created_by_id: string | null
           descricao: string | null
           fornecedor_id: string | null
           id: string
           numero_lote: string
           status: string | null
           updated_at: string | null
+          updated_by_id: string | null
         }
         Insert: {
           created_at?: string | null
+          created_by_id?: string | null
           descricao?: string | null
           fornecedor_id?: string | null
           id?: string
           numero_lote: string
           status?: string | null
           updated_at?: string | null
+          updated_by_id?: string | null
         }
         Update: {
           created_at?: string | null
+          created_by_id?: string | null
           descricao?: string | null
           fornecedor_id?: string | null
           id?: string
           numero_lote?: string
           status?: string | null
           updated_at?: string | null
+          updated_by_id?: string | null
         }
         Relationships: [
           {
@@ -557,6 +572,7 @@ export type Database = {
       repair_returns: {
         Row: {
           created_at: string | null
+          created_by_id: string | null
           data_analise: string | null
           data_retorno: string | null
           defeito_constatado: string | null
@@ -573,9 +589,11 @@ export type Database = {
           tecnico: string | null
           tecnico_id: string | null
           updated_at: string | null
+          updated_by_id: string | null
         }
         Insert: {
           created_at?: string | null
+          created_by_id?: string | null
           data_analise?: string | null
           data_retorno?: string | null
           defeito_constatado?: string | null
@@ -592,9 +610,11 @@ export type Database = {
           tecnico?: string | null
           tecnico_id?: string | null
           updated_at?: string | null
+          updated_by_id?: string | null
         }
         Update: {
           created_at?: string | null
+          created_by_id?: string | null
           data_analise?: string | null
           data_retorno?: string | null
           defeito_constatado?: string | null
@@ -611,6 +631,7 @@ export type Database = {
           tecnico?: string | null
           tecnico_id?: string | null
           updated_at?: string | null
+          updated_by_id?: string | null
         }
         Relationships: [
           {
@@ -639,30 +660,36 @@ export type Database = {
       repair_suppliers: {
         Row: {
           created_at: string
+          created_by_id: string | null
           id: string
           indice_qualidade: number | null
           nome: string
           total_falhas: number | null
           total_reparos: number | null
           updated_at: string
+          updated_by_id: string | null
         }
         Insert: {
           created_at?: string
+          created_by_id?: string | null
           id?: string
           indice_qualidade?: number | null
           nome: string
           total_falhas?: number | null
           total_reparos?: number | null
           updated_at?: string
+          updated_by_id?: string | null
         }
         Update: {
           created_at?: string
+          created_by_id?: string | null
           id?: string
           indice_qualidade?: number | null
           nome?: string
           total_falhas?: number | null
           total_reparos?: number | null
           updated_at?: string
+          updated_by_id?: string | null
         }
         Relationships: []
       }
@@ -670,26 +697,32 @@ export type Database = {
         Row: {
           ativo: boolean
           created_at: string
+          created_by_id: string | null
           email: string | null
           id: string
           nome: string
           updated_at: string
+          updated_by_id: string | null
         }
         Insert: {
           ativo?: boolean
           created_at?: string
+          created_by_id?: string | null
           email?: string | null
           id?: string
           nome: string
           updated_at?: string
+          updated_by_id?: string | null
         }
         Update: {
           ativo?: boolean
           created_at?: string
+          created_by_id?: string | null
           email?: string | null
           id?: string
           nome?: string
           updated_at?: string
+          updated_by_id?: string | null
         }
         Relationships: []
       }
@@ -720,6 +753,7 @@ export type Database = {
           tecnico_id: string | null
           testado_por: string | null
           updated_at: string | null
+          updated_by_id: string | null
         }
         Insert: {
           checklist_botoes?: boolean | null
@@ -747,6 +781,7 @@ export type Database = {
           tecnico_id?: string | null
           testado_por?: string | null
           updated_at?: string | null
+          updated_by_id?: string | null
         }
         Update: {
           checklist_botoes?: boolean | null
@@ -774,6 +809,7 @@ export type Database = {
           tecnico_id?: string | null
           testado_por?: string | null
           updated_at?: string | null
+          updated_by_id?: string | null
         }
         Relationships: [
           {
