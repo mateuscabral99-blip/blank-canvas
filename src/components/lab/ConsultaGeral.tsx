@@ -111,6 +111,7 @@ export function ConsultaGeral() {
         const events: TimelineEvent[] = [];
         let nome: string | undefined;
         let codigo: string | undefined;
+        let origem: string | undefined;
 
         // Stage: ENTRADA
         (labRes.data || [])
