@@ -73,7 +73,9 @@ export type Database = {
           status_final: string
           status_teste: string
           tecnico_entrada: string | null
+          tecnico_entrada_id: string | null
           tecnico_responsavel: string | null
+          tecnico_responsavel_id: string | null
           tipo: string | null
           updated_at: string | null
           valor_estimado: number
@@ -103,7 +105,9 @@ export type Database = {
           status_final: string
           status_teste: string
           tecnico_entrada?: string | null
+          tecnico_entrada_id?: string | null
           tecnico_responsavel?: string | null
+          tecnico_responsavel_id?: string | null
           tipo?: string | null
           updated_at?: string | null
           valor_estimado?: number
@@ -133,7 +137,9 @@ export type Database = {
           status_final?: string
           status_teste?: string
           tecnico_entrada?: string | null
+          tecnico_entrada_id?: string | null
           tecnico_responsavel?: string | null
+          tecnico_responsavel_id?: string | null
           tipo?: string | null
           updated_at?: string | null
           valor_estimado?: number
@@ -151,6 +157,20 @@ export type Database = {
             columns: ["modelo_id"]
             isOneToOne: false
             referencedRelation: "cadastro_modelos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "equipamentos_tecnico_entrada_id_fkey"
+            columns: ["tecnico_entrada_id"]
+            isOneToOne: false
+            referencedRelation: "tecnicos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "equipamentos_tecnico_responsavel_id_fkey"
+            columns: ["tecnico_responsavel_id"]
+            isOneToOne: false
+            referencedRelation: "tecnicos"
             referencedColumns: ["id"]
           },
         ]
@@ -235,7 +255,9 @@ export type Database = {
           status_teste: string | null
           supplier_id: string | null
           tecnico: string | null
+          tecnico_id: string | null
           tecnico_responsavel: string | null
+          tecnico_responsavel_id: string | null
           updated_at: string | null
           usuario: string | null
           usuario_nome: string | null
@@ -276,7 +298,9 @@ export type Database = {
           status_teste?: string | null
           supplier_id?: string | null
           tecnico?: string | null
+          tecnico_id?: string | null
           tecnico_responsavel?: string | null
+          tecnico_responsavel_id?: string | null
           updated_at?: string | null
           usuario?: string | null
           usuario_nome?: string | null
@@ -317,7 +341,9 @@ export type Database = {
           status_teste?: string | null
           supplier_id?: string | null
           tecnico?: string | null
+          tecnico_id?: string | null
           tecnico_responsavel?: string | null
+          tecnico_responsavel_id?: string | null
           updated_at?: string | null
           usuario?: string | null
           usuario_nome?: string | null
@@ -329,6 +355,20 @@ export type Database = {
             columns: ["equipment_id"]
             isOneToOne: false
             referencedRelation: "equipamentos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lab_items_tecnico_id_fkey"
+            columns: ["tecnico_id"]
+            isOneToOne: false
+            referencedRelation: "tecnicos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lab_items_tecnico_responsavel_id_fkey"
+            columns: ["tecnico_responsavel_id"]
+            isOneToOne: false
+            referencedRelation: "tecnicos"
             referencedColumns: ["id"]
           },
         ]
@@ -500,6 +540,7 @@ export type Database = {
           status: string | null
           supplier_id: string | null
           tecnico: string | null
+          tecnico_id: string | null
           updated_at: string | null
         }
         Insert: {
@@ -518,6 +559,7 @@ export type Database = {
           status?: string | null
           supplier_id?: string | null
           tecnico?: string | null
+          tecnico_id?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -536,6 +578,7 @@ export type Database = {
           status?: string | null
           supplier_id?: string | null
           tecnico?: string | null
+          tecnico_id?: string | null
           updated_at?: string | null
         }
         Relationships: [
@@ -551,6 +594,13 @@ export type Database = {
             columns: ["supplier_id"]
             isOneToOne: false
             referencedRelation: "repair_suppliers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "repair_returns_tecnico_id_fkey"
+            columns: ["tecnico_id"]
+            isOneToOne: false
+            referencedRelation: "tecnicos"
             referencedColumns: ["id"]
           },
         ]
