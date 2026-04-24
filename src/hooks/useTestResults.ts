@@ -65,8 +65,14 @@ export function useTestResults() {
       queryClient.invalidateQueries({ queryKey: ["equipamentos"] });
       toast.success("Resultado de teste registrado com sucesso!");
     },
-    onError: (error) => {
-      console.error(error);
+    onError: (error: any) => {
+      console.error("Erro completo ao registrar resultado (Supabase):", {
+        message: error?.message,
+        code: error?.code,
+        details: error?.details,
+        hint: error?.hint,
+        error: error
+      });
       toast.error("Erro ao registrar resultado de teste.");
     },
   });
