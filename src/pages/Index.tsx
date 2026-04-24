@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import alaresLogo from "@/assets/alares-logo.png";
 import { CadastroForm } from "@/components/lab/CadastroForm";
 import { EntradaLabForm } from "@/components/lab/EntradaLabForm";
@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   LayoutDashboard, Kanban, Package, LogIn, LogOut,
   ClipboardCheck, ClipboardList, BarChart3, ChevronDown, ChevronRight,
-  Settings, Briefcase, Monitor, AlertTriangle, Menu, X, Wrench, Users,
+  Settings, Briefcase, Monitor, AlertTriangle, Menu, X, Wrench, Users, RotateCcw,
   Sun, Moon, Search,
 } from "lucide-react";
 import { ConsultaGeral } from "@/components/lab/ConsultaGeral";
@@ -82,13 +82,17 @@ const roleBadgeColor: Record<string, string> = {
 };
 
 export default function Index() {
-  const { items, addItem, addBatch, deleteItem, isBatchLoading } = useLabItems();
+  const { items, addItem, addBatch, deleteItem, isBatchLoading, refetch } = useLabItems();
   const { modelos, addModelo, addBatchModelos, deleteModelo } = useCadastroModelos();
   const { user, signOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { role } = useUserRole();
   const { displayName, email } = useUserProfile();
   const [tab, setTab] = useState("dashboard");
+  
+  useEffect(() => {
+    refetch();
+  }, []);
   const [pipelineFilter, setPipelineFilter] = useState<string | undefined>(undefined);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     "Painel de Controle": true,
@@ -260,6 +264,15 @@ export default function Index() {
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             {sidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-9 w-9 shrink-0"
+            onClick={() => refetch()}
+            title="Atualizar dados"
+          >
+            <RotateCcw className="h-4 w-4" />
           </Button>
           <div className="flex items-center gap-2">
             {currentPage?.icon && <span className="text-primary">{currentPage.icon}</span>}

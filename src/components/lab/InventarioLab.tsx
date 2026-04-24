@@ -53,10 +53,8 @@ export function InventarioLab({ items, userRole }: Props) {
   };
 
   const mapOriginLabel = (raw: string) => {
-    const cleaned = (raw || "").toLowerCase().trim();
-    if (cleaned.includes("reversa")) return "Reversa";
-    // Everything else (qualidade, desconexão, null, etc) maps to "Desconexão"
-    return "Desconexão";
+    if (!raw) return "Não informado";
+    return raw.trim();
   };
 
   const uniqueCategorias = useMemo(() => [...new Set(items.map(i => i.categoria).filter(Boolean))], [items]);
@@ -148,7 +146,7 @@ export function InventarioLab({ items, userRole }: Props) {
     if (!canExport) return;
     const header = "Data Entrada,SN,Código,Nome,Categoria,Origem,Destino,Conferente\n";
     const rows = filtered.map(i =>
-      [i.data_entrada, i.sn, i.modelo || "", i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
+      [i.data_entrada, i.sn, i.codigo || "", i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
         .map(v => `"${(String(v || "")).replace(/"/g, '""')}"`)
         .join(",")
     ).join("\n");
@@ -175,10 +173,11 @@ export function InventarioLab({ items, userRole }: Props) {
   }
 
   const originBadgeColor = (origin: string) => {
-    const o = origin?.toLowerCase() || "";
-    if (o.includes("desconex")) return "bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-300/40";
+    const o = (origin || "").toLowerCase();
     if (o.includes("reversa")) return "bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border-indigo-300/40";
-    return "bg-muted text-muted-foreground border-border/40";
+    if (o.includes("desconex")) return "bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-300/40";
+    if (o.includes("qualidade")) return "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-300/40";
+    return "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30";
   };
 
   const destinoBadgeColor = (dest: string) => {
@@ -376,7 +375,7 @@ export function InventarioLab({ items, userRole }: Props) {
                   <TableRow key={i.id}>
                     <TableCell className="whitespace-nowrap text-xs">{i.data_entrada}</TableCell>
                     <TableCell className="font-mono text-xs">{i.sn}</TableCell>
-                    <TableCell className="font-mono text-xs">{i.modelo || "-"}</TableCell>
+                    <TableCell className="font-mono text-xs">{i.codigo || "-"}</TableCell>
                     <TableCell className="text-xs">{i.nome}</TableCell>
                     <TableCell className="text-xs">{i.categoria}</TableCell>
                     <TableCell>

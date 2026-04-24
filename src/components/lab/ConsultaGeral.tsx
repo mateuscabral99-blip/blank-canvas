@@ -25,6 +25,7 @@ interface SNResult {
   events: TimelineEvent[];
   nome?: string;
   codigo?: string;
+  origem?: string;
 }
 
 const stageMeta: Record<TimelineEvent["stage"], { icon: React.ReactNode; color: string; bg: string; ring: string }> = {
@@ -97,7 +98,7 @@ export function ConsultaGeral() {
     setSearched(true);
     try {
       const [labRes, testRes, repairRes] = await Promise.all([
-        supabase.from("equipamentos").select("serial_number,nome,codigo,created_at,data_entrada").in("serial_number", sns),
+        supabase.from("equipamentos").select("serial_number,nome,codigo,origem,created_at,data_entrada").in("serial_number", sns),
         supabase.from("test_results").select("sn,resultado,destino_reparo,data_teste,created_at,nome,codigo").in("sn", sns),
         supabase.from("repair_returns").select("sn,encaminhamento,resultado_amostragem,created_at").in("sn", sns),
       ]);
@@ -110,6 +111,7 @@ export function ConsultaGeral() {
         const events: TimelineEvent[] = [];
         let nome: string | undefined;
         let codigo: string | undefined;
+        let origem: string | undefined;
 
         // Stage: ENTRADA
         (labRes.data || [])
@@ -117,6 +119,7 @@ export function ConsultaGeral() {
           .forEach((r: any) => {
             nome = nome || r.nome;
             codigo = codigo || r.codigo;
+            origem = origem || r.origem;
             // Prefer data_entrada, fallback to created_at
             const iso = r.data_entrada || r.created_at;
             const { date, time } = formatDateTime(iso);
@@ -166,7 +169,7 @@ export function ConsultaGeral() {
         // Sort events chronologically (Oldest to Newest)
         events.sort((a, b) => new Date(a.raw).getTime() - new Date(b.raw).getTime());
 
-        return { sn, found: events.length > 0, events, nome, codigo };
+        return { sn, found: events.length > 0, events, nome, codigo, origem };
       });
 
       setResults(compiled);
@@ -230,12 +233,19 @@ export function ConsultaGeral() {
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <CardTitle className="text-sm font-mono truncate">{r.sn}</CardTitle>
-                    {r.found && (r.nome || r.codigo) && (
-                      <p className="text-xs text-muted-foreground mt-1 truncate">
-                        {r.codigo && <span className="font-mono">{r.codigo}</span>}
-                        {r.codigo && r.nome && " · "}
-                        {r.nome}
-                      </p>
+                    {r.found && (r.nome || r.codigo || r.origem) && (
+                      <div className="mt-1 space-y-1">
+                        <p className="text-xs text-muted-foreground truncate">
+                          {r.codigo && <span className="font-mono text-primary/80">{r.codigo}</span>}
+                          {r.codigo && r.nome && " · "}
+                          {r.nome}
+                        </p>
+                        {r.origem && (
+                          <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/70">
+                            Origem: {r.origem}
+                          </p>
+                        )}
+                      </div>
                     )}
                   </div>
                   {r.found ? (

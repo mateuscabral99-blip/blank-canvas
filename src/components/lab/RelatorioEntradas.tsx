@@ -101,7 +101,7 @@ export function RelatorioEntradas({ userRole }: Props) {
     if (!canExport) return;
     const header = "ID,Data Entrada,SN,Codigo,Nome,Categoria,Origem,Destino,Conferente\n";
     const rows = filtered.map(i =>
-      [i.id, i.data_entrada, i.sn, i.modelo || "", i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
+      [i.id, i.data_entrada, i.sn, i.codigo || "", i.nome, i.categoria, i.origem, getDestino(i), i.conferente]
         .map(v => `"${(String(v || "")).replace(/"/g, '""')}"`)
         .join(",")
     ).join("\n");
@@ -283,7 +283,7 @@ export function RelatorioEntradas({ userRole }: Props) {
                     <TableRow key={i.id}>
                       <TableCell className="whitespace-nowrap">{i.data_entrada}</TableCell>
                       <TableCell>{i.sn}</TableCell>
-                      <TableCell className="font-mono">{i.modelo || "-"}</TableCell>
+                      <TableCell className="font-mono">{i.codigo || "-"}</TableCell>
                       <TableCell>{i.nome}</TableCell>
                       <TableCell>{i.categoria}</TableCell>
                       <TableCell>{i.origem}</TableCell>
