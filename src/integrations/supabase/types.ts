@@ -72,6 +72,7 @@ export type Database = {
           tecnico_entrada: string | null
           tecnico_responsavel: string | null
           tipo: string | null
+          updated_at: string | null
           valor_estimado: number
         }
         Insert: {
@@ -101,6 +102,7 @@ export type Database = {
           tecnico_entrada?: string | null
           tecnico_responsavel?: string | null
           tipo?: string | null
+          updated_at?: string | null
           valor_estimado?: number
         }
         Update: {
@@ -130,6 +132,7 @@ export type Database = {
           tecnico_entrada?: string | null
           tecnico_responsavel?: string | null
           tipo?: string | null
+          updated_at?: string | null
           valor_estimado?: number
         }
         Relationships: [
