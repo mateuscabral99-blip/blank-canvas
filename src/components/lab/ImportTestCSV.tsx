@@ -4,17 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Upload } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-
-export interface NewTestResult {
-  equipment_id: string;
-  sn: string;
-  codigo: string;
-  nome: string;
-  resultado: string;
-  observacoes: string;
-  data_teste: string;
-  testado_por: string;
-}
+import { NewTestResult } from "@/hooks/useTestResults";
 
 interface Props {
   onImportBatch: (items: NewTestResult[]) => void;
