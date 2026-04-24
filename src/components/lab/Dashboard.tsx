@@ -148,9 +148,12 @@ export function Dashboard({ items, onCardClick }: Props) {
   const volumeByOrigin = useMemo(() => {
     const map = new Map<string, number>();
     items.forEach((i) => {
-      const origin = i.origem?.trim();
-      if (!origin || origin.toLowerCase() === "não informado") return;
-      map.set(origin, (map.get(origin) || 0) + 1);
+      let origin = (i.origem || "Outros").trim();
+      if (origin.toLowerCase() === "não informado") origin = "Outros";
+      
+      // Normalize casing for grouping
+      const key = origin.charAt(0).toUpperCase() + origin.slice(1).toLowerCase();
+      map.set(key, (map.get(key) || 0) + 1);
     });
     
     const colors = [

@@ -46,7 +46,18 @@ export function RelatorioEntradas({ userRole }: Props) {
   const uniqueNomes = useMemo(() => [...new Set(items.map(i => i.nome).filter(Boolean))], [items]);
   const uniqueDestinos = useMemo(() => [...new Set(items.map(i => getDestino(i)).filter(Boolean))], [items]);
   const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferente).filter(Boolean))], [items]);
-  const uniqueOrigens = useMemo(() => [...new Set(items.map(i => i.origem).filter(Boolean))], [items]);
+  const uniqueOrigens = useMemo(() => {
+    const set = new Set(items.map(i => (i.origem || "Outros").trim()));
+    // Merge variations like 'reversa' and 'Reversa'
+    const normalizedMap = new Map<string, string>();
+    set.forEach(val => {
+      const lower = val.toLowerCase();
+      if (!normalizedMap.has(lower)) {
+        normalizedMap.set(lower, val);
+      }
+    });
+    return Array.from(normalizedMap.values());
+  }, [items]);
 
   const filtered = useMemo(() => {
     return items.filter(i => {
@@ -59,7 +70,7 @@ export function RelatorioEntradas({ userRole }: Props) {
       if (filterNome !== "all" && i.nome !== filterNome) return false;
       if (filterDestino !== "all" && getDestino(i) !== filterDestino) return false;
       if (filterConferente !== "all" && i.conferente !== filterConferente) return false;
-      if (filterOrigem !== "all" && i.origem !== filterOrigem) return false;
+      if (filterOrigem !== "all" && (i.origem || "").toLowerCase() !== filterOrigem.toLowerCase()) return false;
       if (search) {
         const s = search.toLowerCase();
         const codigoSearch = (i.modelo || i.codigo || "").toLowerCase();
@@ -286,7 +297,7 @@ export function RelatorioEntradas({ userRole }: Props) {
                       <TableCell className="font-mono">{i.codigo || "-"}</TableCell>
                       <TableCell>{i.nome}</TableCell>
                       <TableCell>{i.categoria}</TableCell>
-                      <TableCell>{i.origem}</TableCell>
+                      <TableCell>{i.origem || "Outros"}</TableCell>
                       <TableCell>{getDestino(i)}</TableCell>
                       <TableCell>{i.conferente}</TableCell>
                     </TableRow>
