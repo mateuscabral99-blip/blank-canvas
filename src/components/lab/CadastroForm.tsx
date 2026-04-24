@@ -179,7 +179,7 @@ export function CadastroForm({ modelos, onAdd, onAddBatch, onDelete, isAdmin }: 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="codigo">Código I-MANAGER</Label>
+                <Label htmlFor="codigo">Código</Label>
                 <Input id="codigo" value={codigo} onChange={(e) => setCodigo(e.target.value)} placeholder="Código do equipamento" />
               </div>
               <div className="space-y-1.5">
