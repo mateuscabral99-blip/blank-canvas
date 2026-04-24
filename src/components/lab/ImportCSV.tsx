@@ -26,12 +26,11 @@ function detectDelimiter(sample: string): "," | ";" {
   return semicolons > commas ? ";" : ",";
 }
 
-function parseOrigemFluxo(value: string): "qualidade" | "reversa" | null {
-  const origem = normalizeText(value);
-  if (!origem) return null;
-  if (origem.includes("desconex") || origem.includes("qualidade")) return "qualidade";
-  if (origem.includes("reversa")) return "reversa";
-  return null;
+function mapOrigem(value: string): string {
+  const normalized = normalizeText(value);
+  if (normalized.includes("reversa")) return "Reversa";
+  if (normalized.includes("qualidade") || normalized.includes("desconex")) return "Desconexão";
+  return "Desconexão";
 }
 
 function findHeaderIndex(headers: string[], candidates: string[]): number {
@@ -124,8 +123,8 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
     for (let i = 1; i < rows.length; i++) {
       const cols = rows[i].map((c) => (c ?? "").toString());
 
-      const origemFluxo = parseOrigemFluxo(cols[origemIdx] || "");
-      if (!origemFluxo) {
+      const origemVal = mapOrigem(cols[origemIdx] || "");
+      if (!origemVal) {
         toast.error(`Linha ${i + 1}: informe uma Origem válida (Reversa ou Desconexão).`);
         if (inputRef.current) inputRef.current.value = "";
         return;
@@ -181,8 +180,8 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
         nome: nomeVal,
         categoria,
         interesse,
-        origem: cols[origemIdx]?.trim() || "",
-        origem_fluxo: origemFluxo,
+        origem: origemVal,
+        origem_fluxo: origemVal === "Reversa" ? "reversa" : "qualidade",
         status_teste: "pendente",
         dias_estoque: 0,
         valor_estimado: 0,

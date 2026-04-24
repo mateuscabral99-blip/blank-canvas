@@ -20,12 +20,18 @@ export function useLabItems() {
       if (error) throw error;
       
       // Map database fields to the LabItem type used in the frontend
-      return (data as any[]).map(item => ({
-        ...item,
-        sn: item.serial_number || "",
-        conferente: item.conferido_por || "",
-        origem: item.origem || "",
-      })) as LabItem[];
+      return (data as any[]).map(item => {
+        const rawOrigem = (item.origem || item.origem_fluxo || "").trim().toLowerCase();
+        // Strict mapping: anything containing 'reversa' is 'Reversa', everything else is 'Desconexão'
+        const mappedOrigem = rawOrigem.includes("reversa") ? "Reversa" : "Desconexão";
+        
+        return {
+          ...item,
+          sn: item.serial_number || "",
+          conferente: item.conferido_por || "",
+          origem: mappedOrigem,
+        };
+      }) as LabItem[];
     },
   });
 
@@ -82,22 +88,27 @@ export function useLabItems() {
         return "pendente";
       };
 
-      // Normalize origem_fluxo to DB-allowed values: 'qualidade' | 'reversa'
-      const normalizeOrigemFluxo = (raw: string | undefined): "qualidade" | "reversa" => {
+      // Normalize origem to DB-allowed values, prioritizing 'Desconexão' for 'qualidade'
+      const normalizeOrigem = (raw: string | undefined): string => {
         const v = (raw || "").toString().trim().toLowerCase();
-        return v === "reversa" ? "reversa" : "qualidade";
+        if (v === "reversa") return "Reversa";
+        if (v === "qualidade" || v.includes("desconex")) return "Desconexão";
+        return (raw || "Desconexão").trim();
       };
 
       const rows = batch.map((data) => {
         const { status_final, acao_recomendada } = calcularStatus(data);
+        const normalizedOrigem = normalizeOrigem(data.origem || data.origem_fluxo);
+        
         return {
           codigo: (data.codigo || "").trim(),
           serial_number: (data.sn || "").trim(),
           nome: (data.nome || "").trim(),
           categoria: (data.categoria || "Interesse").trim(),
           interesse: data.interesse,
-          origem_fluxo: normalizeOrigemFluxo(data.origem_fluxo),
-          origem: data.origem,
+          origem: normalizedOrigem,
+          // DB requires origem_fluxo to be 'qualidade' or 'reversa'
+          origem_fluxo: normalizedOrigem.toLowerCase() === "reversa" ? "reversa" : "qualidade",
           status_teste: normalizeStatusTeste(data.status_teste),
           dias_estoque: data.dias_estoque ?? 0,
           valor_estimado: data.valor_estimado ?? 0,
@@ -112,12 +123,12 @@ export function useLabItems() {
 
       // Validate required NOT NULL fields up front so we can pinpoint the row
       const missingIdx = rows.findIndex(
-        (r) => !r.nome || !r.categoria || !r.origem_fluxo || !r.status_teste || !r.status_final
+        (r) => !r.nome || !r.categoria || !r.origem || !r.status_teste || !r.status_final
       );
       if (missingIdx >= 0) {
         const r = rows[missingIdx];
         throw new Error(
-          `Linha ${missingIdx + 2}: campo obrigatório vazio (nome="${r.nome}", categoria="${r.categoria}", origem_fluxo="${r.origem_fluxo}", status_teste="${r.status_teste}", status_final="${r.status_final}")`
+          `Linha ${missingIdx + 2}: campo obrigatório vazio (nome="${r.nome}", categoria="${r.categoria}", origem="${r.origem}", status_teste="${r.status_teste}", status_final="${r.status_final}")`
         );
       }
 

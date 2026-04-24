@@ -97,10 +97,7 @@ export function InventarioLab({ items, userRole }: Props) {
   const volumeByOrigin = useMemo(() => {
     const map = new Map<string, number>();
     items.forEach((i) => {
-      let origin = (i.origem || "").trim();
-      if (!origin) return;
-      
-      const key = origin;
+      const key = i.origem || "Desconexão";
       map.set(key, (map.get(key) || 0) + 1);
     });
     return [...map.entries()]
@@ -176,9 +173,7 @@ export function InventarioLab({ items, userRole }: Props) {
   const originBadgeColor = (origin: string) => {
     const o = (origin || "").toLowerCase();
     if (o.includes("reversa")) return "bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border-indigo-300/40";
-    if (o.includes("desconex")) return "bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-300/40";
-    if (o.includes("qualidade")) return "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-300/40";
-    return "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30";
+    return "bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-300/40";
   };
 
   const destinoBadgeColor = (dest: string) => {
