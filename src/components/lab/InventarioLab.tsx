@@ -98,9 +98,12 @@ export function InventarioLab({ items, userRole }: Props) {
   const volumeByOrigin = useMemo(() => {
     const map = new Map<string, number>();
     items.forEach((i) => {
-      const rawOrigin = i.origem || "Não informado";
-      const origin = mapOriginLabel(rawOrigin);
-      map.set(origin, (map.get(origin) || 0) + 1);
+      let origin = (i.origem || "Outros").trim();
+      if (origin.toLowerCase() === "não informado") origin = "Outros";
+      
+      // Normalize casing for grouping
+      const key = origin.charAt(0).toUpperCase() + origin.slice(1).toLowerCase();
+      map.set(key, (map.get(key) || 0) + 1);
     });
     return [...map.entries()]
       .map(([origem, count]) => ({ origem, count }))
