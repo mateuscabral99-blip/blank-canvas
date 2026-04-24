@@ -416,6 +416,7 @@ export type Database = {
           observacoes: string | null
           sn: string
           status_reincidencia: string | null
+          tecnico_id: string | null
           updated_at: string
         }
         Insert: {
@@ -428,6 +429,7 @@ export type Database = {
           observacoes?: string | null
           sn: string
           status_reincidencia?: string | null
+          tecnico_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -440,6 +442,7 @@ export type Database = {
           observacoes?: string | null
           sn?: string
           status_reincidencia?: string | null
+          tecnico_id?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -448,6 +451,13 @@ export type Database = {
             columns: ["equipment_id"]
             isOneToOne: false
             referencedRelation: "equipamentos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "laudos_tecnico_id_fkey"
+            columns: ["tecnico_id"]
+            isOneToOne: false
+            referencedRelation: "tecnicos"
             referencedColumns: ["id"]
           },
         ]
@@ -685,6 +695,7 @@ export type Database = {
           resultado_final: string | null
           serial_number: string | null
           sn: string | null
+          tecnico_id: string | null
           testado_por: string | null
           updated_at: string | null
         }
@@ -710,6 +721,7 @@ export type Database = {
           resultado_final?: string | null
           serial_number?: string | null
           sn?: string | null
+          tecnico_id?: string | null
           testado_por?: string | null
           updated_at?: string | null
         }
@@ -735,6 +747,7 @@ export type Database = {
           resultado_final?: string | null
           serial_number?: string | null
           sn?: string | null
+          tecnico_id?: string | null
           testado_por?: string | null
           updated_at?: string | null
         }
@@ -744,6 +757,13 @@ export type Database = {
             columns: ["equipment_id"]
             isOneToOne: false
             referencedRelation: "equipamentos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "test_results_tecnico_id_fkey"
+            columns: ["tecnico_id"]
+            isOneToOne: false
+            referencedRelation: "tecnicos"
             referencedColumns: ["id"]
           },
         ]
