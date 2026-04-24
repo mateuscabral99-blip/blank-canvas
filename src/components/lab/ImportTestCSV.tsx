@@ -153,14 +153,19 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
       // Collect unique SNs and validate against equipamentos
       const uniqueSns = [...new Set(rows.map((r) => r.sn))];
 
-      const { data: labEntries, error } = await supabase
+      const { data: labEntries, error: supabaseError } = await supabase
         .from("equipamentos")
         .select("id, sn, codigo, nome")
         .in("sn", uniqueSns);
 
-      if (error) {
+      if (supabaseError) {
         toast.error("Erro ao verificar entradas no banco de dados.");
-        console.error(error);
+        console.error("Erro completo do Supabase ao buscar equipamentos:", {
+          message: supabaseError.message,
+          code: supabaseError.code,
+          details: supabaseError.details,
+          hint: supabaseError.hint
+        });
         return;
       }
 
@@ -177,8 +182,10 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
         const entry = snMap.get(row.sn);
         if (!entry) {
           failedSns.push(row.sn);
-          // Feedback: Show detailed error in console as requested
-          console.error(`ERRO IMPORTAÇÃO: SN "${row.sn}" não encontrado na tabela 'equipamentos'.`);
+          toast.error(`SN ${row.sn} não encontrado na base`, {
+            description: "Este equipamento precisa ser cadastrado na entrada antes de importar resultados de teste."
+          });
+          console.error(`Erro de Importação: SN "${row.sn}" não encontrado na tabela 'equipamentos'.`);
           continue;
         }
         
