@@ -53,8 +53,7 @@ export function InventarioLab({ items, userRole }: Props) {
   };
 
   const mapOriginLabel = (raw: string) => {
-    if (!raw) return "Não informado";
-    return raw.trim();
+    return (raw || "").trim();
   };
 
   const uniqueCategorias = useMemo(() => [...new Set(items.map(i => i.categoria).filter(Boolean))], [items]);
