@@ -1,1 +1,0 @@
-ALTER TABLE public.lab_items ADD COLUMN conferido_por text NOT NULL DEFAULT '';

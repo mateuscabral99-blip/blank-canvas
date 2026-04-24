@@ -1,1 +1,0 @@
-ALTER TABLE public.laudos ADD COLUMN causa_reincidencia text NOT NULL DEFAULT '';

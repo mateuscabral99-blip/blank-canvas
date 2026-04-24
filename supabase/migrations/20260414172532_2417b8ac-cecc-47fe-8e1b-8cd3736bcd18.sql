@@ -1,1 +1,0 @@
-UPDATE lab_items SET status_final = 'Teste', acao_recomendada = 'em_analise' WHERE status_final = 'Laudo' AND acao_recomendada = 'gerar_laudo_com_imagens';

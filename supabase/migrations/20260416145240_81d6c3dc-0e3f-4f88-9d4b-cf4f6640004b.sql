@@ -1,1 +1,0 @@
-ALTER TABLE public.cadastro_modelos DROP CONSTRAINT IF EXISTS cadastro_modelos_categoria_check;

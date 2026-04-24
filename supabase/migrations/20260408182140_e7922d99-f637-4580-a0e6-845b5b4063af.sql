@@ -1,1 +1,0 @@
-ALTER TABLE public.lab_items ADD COLUMN IF NOT EXISTS codigo text NOT NULL DEFAULT '';

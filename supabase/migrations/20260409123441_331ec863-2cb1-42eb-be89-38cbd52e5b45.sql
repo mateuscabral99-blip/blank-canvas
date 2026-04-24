@@ -1,2 +1,0 @@
-DROP POLICY "Anyone can view cadastro_modelos" ON public.cadastro_modelos;
-CREATE POLICY "Authenticated users can view cadastro_modelos" ON public.cadastro_modelos FOR SELECT TO authenticated USING (true);
