@@ -70,7 +70,7 @@ export function CadastroForm({ modelos, onAdd, onAddBatch, onDelete, isAdmin }: 
   };
 
   const handleDownloadCSV = () => {
-    const csvContent = "codigo_imanager;nome;classificacao\nEX-001;ONT EXEMPLO;ONT WIFI 6\n";
+    const csvContent = "codigo;nome;classificacao\nEX-001;ONT EXEMPLO;ONT WIFI 6\n";
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
