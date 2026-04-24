@@ -24,6 +24,7 @@ export function useLabItems() {
         ...item,
         sn: item.serial_number || "",
         conferente: item.conferido_por || "",
+        origem: item.origem || "Outros",
       })) as LabItem[];
     },
   });
