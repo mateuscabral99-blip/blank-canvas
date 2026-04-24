@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 interface ManagedUser {
-  id: string;
+  user_id: string;
   email: string;
   nome: string;
   ativo: boolean;
