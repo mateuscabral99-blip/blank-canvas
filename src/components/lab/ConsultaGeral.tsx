@@ -97,7 +97,7 @@ export function ConsultaGeral() {
     setSearched(true);
     try {
       const [labRes, testRes, repairRes] = await Promise.all([
-        supabase.from("equipamentos").select("serial_number,nome,codigo,created_at,data_entrada").in("serial_number", sns),
+        supabase.from("equipamentos").select("serial_number,nome,codigo,origem,created_at,data_entrada").in("serial_number", sns),
         supabase.from("test_results").select("sn,resultado,destino_reparo,data_teste,created_at,nome,codigo").in("sn", sns),
         supabase.from("repair_returns").select("sn,encaminhamento,resultado_amostragem,created_at").in("sn", sns),
       ]);
