@@ -22,6 +22,7 @@ export type Database = {
           created_at: string
           id: string
           nome: string
+          updated_at: string | null
           valor_unitario: number
         }
         Insert: {
@@ -31,6 +32,7 @@ export type Database = {
           created_at?: string
           id?: string
           nome: string
+          updated_at?: string | null
           valor_unitario?: number
         }
         Update: {
@@ -40,6 +42,7 @@ export type Database = {
           created_at?: string
           id?: string
           nome?: string
+          updated_at?: string | null
           valor_unitario?: number
         }
         Relationships: []
@@ -162,6 +165,7 @@ export type Database = {
           status_anterior: string | null
           status_novo: string | null
           tipo_movimentacao: string
+          updated_at: string | null
         }
         Insert: {
           created_at?: string
@@ -172,6 +176,7 @@ export type Database = {
           status_anterior?: string | null
           status_novo?: string | null
           tipo_movimentacao: string
+          updated_at?: string | null
         }
         Update: {
           created_at?: string
@@ -182,6 +187,7 @@ export type Database = {
           status_anterior?: string | null
           status_novo?: string | null
           tipo_movimentacao?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -230,6 +236,7 @@ export type Database = {
           supplier_id: string | null
           tecnico: string | null
           tecnico_responsavel: string | null
+          updated_at: string | null
           usuario: string | null
           usuario_nome: string | null
           valor_estimado: number | null
@@ -270,6 +277,7 @@ export type Database = {
           supplier_id?: string | null
           tecnico?: string | null
           tecnico_responsavel?: string | null
+          updated_at?: string | null
           usuario?: string | null
           usuario_nome?: string | null
           valor_estimado?: number | null
@@ -310,6 +318,7 @@ export type Database = {
           supplier_id?: string | null
           tecnico?: string | null
           tecnico_responsavel?: string | null
+          updated_at?: string | null
           usuario?: string | null
           usuario_nome?: string | null
           valor_estimado?: number | null
@@ -491,6 +500,7 @@ export type Database = {
           status: string | null
           supplier_id: string | null
           tecnico: string | null
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
@@ -508,6 +518,7 @@ export type Database = {
           status?: string | null
           supplier_id?: string | null
           tecnico?: string | null
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
@@ -525,6 +536,7 @@ export type Database = {
           status?: string | null
           supplier_id?: string | null
           tecnico?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -597,6 +609,7 @@ export type Database = {
           serial_number: string | null
           sn: string | null
           testado_por: string | null
+          updated_at: string | null
         }
         Insert: {
           checklist_botoes?: boolean | null
@@ -621,6 +634,7 @@ export type Database = {
           serial_number?: string | null
           sn?: string | null
           testado_por?: string | null
+          updated_at?: string | null
         }
         Update: {
           checklist_botoes?: boolean | null
@@ -645,6 +659,7 @@ export type Database = {
           serial_number?: string | null
           sn?: string | null
           testado_por?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
