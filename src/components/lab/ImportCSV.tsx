@@ -26,12 +26,11 @@ function detectDelimiter(sample: string): "," | ";" {
   return semicolons > commas ? ";" : ",";
 }
 
-function parseOrigemFluxo(value: string): "qualidade" | "reversa" | null {
-  const origem = normalizeText(value);
-  if (!origem) return null;
-  if (origem.includes("desconex") || origem.includes("qualidade")) return "qualidade";
-  if (origem.includes("reversa")) return "reversa";
-  return null;
+function mapOrigem(value: string): string {
+  const normalized = normalizeText(value);
+  if (normalized.includes("reversa")) return "Reversa";
+  if (normalized.includes("qualidade") || normalized.includes("desconex")) return "Desconexão";
+  return "Desconexão";
 }
 
 function findHeaderIndex(headers: string[], candidates: string[]): number {
