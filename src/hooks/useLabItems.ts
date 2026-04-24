@@ -95,7 +95,7 @@ export function useLabItems() {
           valor_estimado: data.valor_estimado ?? 0,
           data_entrada: normalizeDate(data.data_entrada),
           conferente: data.conferente,
-          conferido_por: (data.conferido_por || "").trim(),
+          
           status_final,
           acao_recomendada: acao_recomendada || "",
           created_by: user?.email || "",
