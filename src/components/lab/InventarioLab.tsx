@@ -100,7 +100,8 @@ export function InventarioLab({ items, userRole }: Props) {
   const volumeByOrigin = useMemo(() => {
     const map = new Map<string, number>();
     items.forEach((i) => {
-      const origin = i.origem || "Não informado";
+      const rawOrigin = i.origem || "Não informado";
+      const origin = mapOriginLabel(rawOrigin);
       map.set(origin, (map.get(origin) || 0) + 1);
     });
     return [...map.entries()]
