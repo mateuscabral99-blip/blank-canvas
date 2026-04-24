@@ -60,6 +60,7 @@ export type Database = {
           dias_estoque: number
           id: string
           interesse: boolean
+          lote_id: string | null
           modelo_id: string | null
           nome: string
           origem: string | null
@@ -88,6 +89,7 @@ export type Database = {
           dias_estoque?: number
           id?: string
           interesse?: boolean
+          lote_id?: string | null
           modelo_id?: string | null
           nome: string
           origem?: string | null
@@ -116,6 +118,7 @@ export type Database = {
           dias_estoque?: number
           id?: string
           interesse?: boolean
+          lote_id?: string | null
           modelo_id?: string | null
           nome?: string
           origem?: string | null
@@ -131,10 +134,58 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "equipamentos_lote_id_fkey"
+            columns: ["lote_id"]
+            isOneToOne: false
+            referencedRelation: "lotes"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "equipamentos_modelo_id_fkey"
             columns: ["modelo_id"]
             isOneToOne: false
             referencedRelation: "cadastro_modelos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      item_history: {
+        Row: {
+          created_at: string
+          equipment_id: string | null
+          id: string
+          observacoes: string | null
+          realizado_por: string | null
+          status_anterior: string | null
+          status_novo: string | null
+          tipo_movimentacao: string
+        }
+        Insert: {
+          created_at?: string
+          equipment_id?: string | null
+          id?: string
+          observacoes?: string | null
+          realizado_por?: string | null
+          status_anterior?: string | null
+          status_novo?: string | null
+          tipo_movimentacao: string
+        }
+        Update: {
+          created_at?: string
+          equipment_id?: string | null
+          id?: string
+          observacoes?: string | null
+          realizado_por?: string | null
+          status_anterior?: string | null
+          status_novo?: string | null
+          tipo_movimentacao?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "item_history_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipamentos"
             referencedColumns: ["id"]
           },
         ]
@@ -308,6 +359,7 @@ export type Database = {
           concluido: boolean | null
           created_at: string
           created_by: string | null
+          equipment_id: string | null
           id: string
           observacoes: string | null
           sn: string
@@ -319,6 +371,7 @@ export type Database = {
           concluido?: boolean | null
           created_at?: string
           created_by?: string | null
+          equipment_id?: string | null
           id?: string
           observacoes?: string | null
           sn: string
@@ -330,13 +383,60 @@ export type Database = {
           concluido?: boolean | null
           created_at?: string
           created_by?: string | null
+          equipment_id?: string | null
           id?: string
           observacoes?: string | null
           sn?: string
           status_reincidencia?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "laudos_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipamentos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lotes: {
+        Row: {
+          created_at: string | null
+          descricao: string | null
+          fornecedor_id: string | null
+          id: string
+          numero_lote: string
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          descricao?: string | null
+          fornecedor_id?: string | null
+          id?: string
+          numero_lote: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          descricao?: string | null
+          fornecedor_id?: string | null
+          id?: string
+          numero_lote?: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lotes_fornecedor_id_fkey"
+            columns: ["fornecedor_id"]
+            isOneToOne: false
+            referencedRelation: "repair_suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
