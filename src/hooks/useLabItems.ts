@@ -21,13 +21,13 @@ export function useLabItems() {
       
       // Map database fields to the LabItem type used in the frontend
       return (data as any[]).map(item => {
-        const rawOrigem = (item.origem || item.origem_fluxo || "").trim().toLowerCase();
+        const rawOrigem = (item.origem || "").trim().toLowerCase();
         // Strict mapping: anything containing 'reversa' is 'Reversa', everything else is 'Desconexão'
         const mappedOrigem = rawOrigem.includes("reversa") ? "Reversa" : "Desconexão";
         
         return {
           ...item,
-          sn: item.serial_number || "",
+          sn: item.sn || "",
           conferente: item.conferido_por || "",
           origem: mappedOrigem,
         };
