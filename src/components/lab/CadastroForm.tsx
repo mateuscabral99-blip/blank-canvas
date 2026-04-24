@@ -99,7 +99,7 @@ export function CadastroForm({ modelos, onAdd, onAddBatch, onDelete, isAdmin }: 
       const classIdx = findHeaderIndex(header, ["classificacao"]);
 
       const missingColumns: string[] = [];
-      if (codigoIdx === -1) missingColumns.push("codigo_imanager");
+      if (codigoIdx === -1) missingColumns.push("codigo");
       if (nomeIdx === -1) missingColumns.push("nome");
       if (classIdx === -1) missingColumns.push("classificacao");
 
