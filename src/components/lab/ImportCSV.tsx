@@ -186,7 +186,6 @@ export function ImportCSV({ onImportBatch, isLoading }: Props) {
         dias_estoque: 0,
         valor_estimado: 0,
         data_entrada,
-        conferente: conferente,
         conferente,
       });
     }
