@@ -16,7 +16,8 @@ export type Database = {
     Tables: {
       cadastro_modelos: {
         Row: {
-          categoria: string
+          categoria: string | null
+          classificacao: string
           codigo: string
           created_at: string
           id: string
@@ -24,15 +25,17 @@ export type Database = {
           valor_unitario: number
         }
         Insert: {
-          categoria: string
-          codigo?: string
+          categoria?: string | null
+          classificacao: string
+          codigo: string
           created_at?: string
           id?: string
           nome: string
           valor_unitario?: number
         }
         Update: {
-          categoria?: string
+          categoria?: string | null
+          classificacao?: string
           codigo?: string
           created_at?: string
           id?: string
@@ -41,62 +44,100 @@ export type Database = {
         }
         Relationships: []
       }
-      lab_items: {
+      equipamentos: {
         Row: {
           acao_recomendada: string
           categoria: string
+          classificacao: string | null
           codigo: string
+          codigo_imanager: string | null
           conferido_por: string
           created_at: string
           created_by: string
           data_entrada: string
+          destinacao: string | null
+          destino: string | null
           dias_estoque: number
           id: string
           interesse: boolean
+          modelo_id: string | null
           nome: string
+          origem: string | null
           origem_fluxo: string
-          sn: string
+          serial_number: string
+          status: string | null
           status_final: string
           status_teste: string
+          tecnico_entrada: string | null
+          tecnico_responsavel: string | null
+          tipo: string | null
           valor_estimado: number
         }
         Insert: {
           acao_recomendada?: string
           categoria: string
+          classificacao?: string | null
           codigo?: string
+          codigo_imanager?: string | null
           conferido_por?: string
           created_at?: string
           created_by?: string
           data_entrada?: string
+          destinacao?: string | null
+          destino?: string | null
           dias_estoque?: number
           id?: string
           interesse?: boolean
+          modelo_id?: string | null
           nome: string
+          origem?: string | null
           origem_fluxo: string
-          sn?: string
+          serial_number?: string
+          status?: string | null
           status_final: string
           status_teste: string
+          tecnico_entrada?: string | null
+          tecnico_responsavel?: string | null
+          tipo?: string | null
           valor_estimado?: number
         }
         Update: {
           acao_recomendada?: string
           categoria?: string
+          classificacao?: string | null
           codigo?: string
+          codigo_imanager?: string | null
           conferido_por?: string
           created_at?: string
           created_by?: string
           data_entrada?: string
+          destinacao?: string | null
+          destino?: string | null
           dias_estoque?: number
           id?: string
           interesse?: boolean
+          modelo_id?: string | null
           nome?: string
+          origem?: string | null
           origem_fluxo?: string
-          sn?: string
+          serial_number?: string
+          status?: string | null
           status_final?: string
           status_teste?: string
+          tecnico_entrada?: string | null
+          tecnico_responsavel?: string | null
+          tipo?: string | null
           valor_estimado?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "equipamentos_modelo_id_fkey"
+            columns: ["modelo_id"]
+            isOneToOne: false
+            referencedRelation: "cadastro_modelos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       laudo_attachments: {
         Row: {
@@ -132,174 +173,169 @@ export type Database = {
       }
       laudos: {
         Row: {
-          causa_reincidencia: string
-          concluido: boolean
+          causa_reincidencia: string | null
+          concluido: boolean | null
           created_at: string
-          created_by: string
+          created_by: string | null
           id: string
-          observacoes: string
+          observacoes: string | null
           sn: string
+          status_reincidencia: string | null
           updated_at: string
         }
         Insert: {
-          causa_reincidencia?: string
-          concluido?: boolean
+          causa_reincidencia?: string | null
+          concluido?: boolean | null
           created_at?: string
-          created_by?: string
+          created_by?: string | null
           id?: string
-          observacoes?: string
+          observacoes?: string | null
           sn: string
+          status_reincidencia?: string | null
           updated_at?: string
         }
         Update: {
-          causa_reincidencia?: string
-          concluido?: boolean
+          causa_reincidencia?: string | null
+          concluido?: boolean | null
           created_at?: string
-          created_by?: string
+          created_by?: string | null
           id?: string
-          observacoes?: string
+          observacoes?: string | null
           sn?: string
+          status_reincidencia?: string | null
           updated_at?: string
         }
         Relationships: []
       }
       profiles: {
         Row: {
-          ativo: boolean
+          ativo: boolean | null
           created_at: string
-          email: string
+          email: string | null
           id: string
-          nome: string
+          nome: string | null
+          role: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
-          ativo?: boolean
+          ativo?: boolean | null
           created_at?: string
-          email?: string
+          email?: string | null
           id?: string
-          nome?: string
+          nome?: string | null
+          role?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
-          ativo?: boolean
+          ativo?: boolean | null
           created_at?: string
-          email?: string
+          email?: string | null
           id?: string
-          nome?: string
+          nome?: string | null
+          role?: string | null
           updated_at?: string
           user_id?: string
         }
         Relationships: []
       }
-      repair_returns: {
-        Row: {
-          created_at: string
-          encaminhamento: string
-          id: string
-          observacoes: string
-          resultado_amostragem: string
-          sn: string
-          supplier_id: string
-        }
-        Insert: {
-          created_at?: string
-          encaminhamento?: string
-          id?: string
-          observacoes?: string
-          resultado_amostragem?: string
-          sn: string
-          supplier_id: string
-        }
-        Update: {
-          created_at?: string
-          encaminhamento?: string
-          id?: string
-          observacoes?: string
-          resultado_amostragem?: string
-          sn?: string
-          supplier_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "repair_returns_supplier_id_fkey"
-            columns: ["supplier_id"]
-            isOneToOne: false
-            referencedRelation: "repair_suppliers"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       repair_suppliers: {
         Row: {
           created_at: string
           id: string
-          indice_qualidade: number
+          indice_qualidade: number | null
           nome: string
-          total_falhas: number
-          total_reparos: number
+          total_falhas: number | null
+          total_reparos: number | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           id?: string
-          indice_qualidade?: number
+          indice_qualidade?: number | null
           nome: string
-          total_falhas?: number
-          total_reparos?: number
+          total_falhas?: number | null
+          total_reparos?: number | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           id?: string
-          indice_qualidade?: number
+          indice_qualidade?: number | null
           nome?: string
-          total_falhas?: number
-          total_reparos?: number
+          total_falhas?: number | null
+          total_reparos?: number | null
           updated_at?: string
         }
         Relationships: []
       }
       test_results: {
         Row: {
-          codigo: string
+          checklist_botoes: boolean | null
+          checklist_firmware: boolean | null
+          checklist_fonte: boolean | null
+          checklist_portas: boolean | null
+          checklist_wifi: boolean | null
+          codigo: string | null
+          codigo_imanager: string | null
           created_at: string
-          created_by: string
-          data_teste: string
-          destino_reparo: string
+          created_by: string | null
+          data_teste: string | null
+          defeitos_identificados: string | null
+          destino: string | null
+          destino_reparo: string | null
           id: string
-          nome: string
-          observacoes: string
-          resultado: string
-          sn: string
-          testado_por: string
+          nome: string | null
+          observacoes: string | null
+          resultado: string | null
+          resultado_final: string | null
+          serial_number: string | null
+          testado_por: string | null
         }
         Insert: {
-          codigo?: string
+          checklist_botoes?: boolean | null
+          checklist_firmware?: boolean | null
+          checklist_fonte?: boolean | null
+          checklist_portas?: boolean | null
+          checklist_wifi?: boolean | null
+          codigo?: string | null
+          codigo_imanager?: string | null
           created_at?: string
-          created_by?: string
-          data_teste?: string
-          destino_reparo?: string
+          created_by?: string | null
+          data_teste?: string | null
+          defeitos_identificados?: string | null
+          destino?: string | null
+          destino_reparo?: string | null
           id?: string
-          nome?: string
-          observacoes?: string
-          resultado: string
-          sn: string
-          testado_por?: string
+          nome?: string | null
+          observacoes?: string | null
+          resultado?: string | null
+          resultado_final?: string | null
+          serial_number?: string | null
+          testado_por?: string | null
         }
         Update: {
-          codigo?: string
+          checklist_botoes?: boolean | null
+          checklist_firmware?: boolean | null
+          checklist_fonte?: boolean | null
+          checklist_portas?: boolean | null
+          checklist_wifi?: boolean | null
+          codigo?: string | null
+          codigo_imanager?: string | null
           created_at?: string
-          created_by?: string
-          data_teste?: string
-          destino_reparo?: string
+          created_by?: string | null
+          data_teste?: string | null
+          defeitos_identificados?: string | null
+          destino?: string | null
+          destino_reparo?: string | null
           id?: string
-          nome?: string
-          observacoes?: string
-          resultado?: string
-          sn?: string
-          testado_por?: string
+          nome?: string | null
+          observacoes?: string | null
+          resultado?: string | null
+          resultado_final?: string | null
+          serial_number?: string | null
+          testado_por?: string | null
         }
         Relationships: []
       }
@@ -330,13 +366,6 @@ export type Database = {
     }
     Functions: {
       has_any_role: { Args: { _user_id: string }; Returns: boolean }
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
       is_admin_or_supervisor: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
