@@ -48,15 +48,7 @@ export function RelatorioEntradas({ userRole }: Props) {
   const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferente).filter(Boolean))], [items]);
   const uniqueOrigens = useMemo(() => {
     const set = new Set(items.map(i => (i.origem || "").trim()).filter(Boolean));
-    // Merge variations like 'reversa' and 'Reversa'
-    const normalizedMap = new Map<string, string>();
-    set.forEach(val => {
-      const lower = val.toLowerCase();
-      if (!normalizedMap.has(lower)) {
-        normalizedMap.set(lower, val);
-      }
-    });
-    return Array.from(normalizedMap.values());
+    return Array.from(set);
   }, [items]);
 
   const filtered = useMemo(() => {
