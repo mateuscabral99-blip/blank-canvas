@@ -98,11 +98,13 @@ export function EntradaLabForm({ onAdd, onImportBatch, isBatchLoading }: Props) 
       nome: nome.trim(),
       categoria,
       interesse,
+      origem,
       origem_fluxo: origemFluxo,
       status_teste: "pendente",
       dias_estoque: 0,
       valor_estimado: 0,
       data_entrada: dataRecebimento,
+      conferente: conferidoPor,
       conferido_por: conferidoPor,
     };
   };
