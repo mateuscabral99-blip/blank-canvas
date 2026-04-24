@@ -113,7 +113,7 @@ export function ConsultaGeral() {
 
         // Stage: ENTRADA
         (labRes.data || [])
-          .filter((r: any) => r.sn === sn)
+          .filter((r: any) => r.serial_number === sn)
           .forEach((r: any) => {
             nome = nome || r.nome;
             codigo = codigo || r.codigo;
