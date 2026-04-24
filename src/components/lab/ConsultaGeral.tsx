@@ -169,7 +169,7 @@ export function ConsultaGeral() {
         // Sort events chronologically (Oldest to Newest)
         events.sort((a, b) => new Date(a.raw).getTime() - new Date(b.raw).getTime());
 
-        return { sn, found: events.length > 0, events, nome, codigo };
+        return { sn, found: events.length > 0, events, nome, codigo, origem };
       });
 
       setResults(compiled);
