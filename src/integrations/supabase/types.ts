@@ -554,6 +554,7 @@ export type Database = {
     }
     Functions: {
       has_any_role: { Args: { _user_id: string }; Returns: boolean }
+      is_admin: { Args: { user_id: string }; Returns: boolean }
       is_admin_or_supervisor: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
