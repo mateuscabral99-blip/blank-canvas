@@ -4,16 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Upload } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-
-export interface NewTestResult {
-  sn: string;
-  codigo: string;
-  nome: string;
-  resultado: string;
-  observacoes: string;
-  data_teste: string;
-  testado_por: string;
-}
+import { NewTestResult } from "@/hooks/useTestResults";
 
 interface Props {
   onImportBatch: (items: NewTestResult[]) => void;
@@ -37,6 +28,41 @@ function findHeaderIndex(headers: string[], candidates: string[]): number {
   return headers.findIndex((h) =>
     candidates.some((c) => h.includes(c))
   );
+}
+
+function parseDateToISO(dateStr: string): string {
+  if (!dateStr) return new Date().toISOString().slice(0, 10);
+  
+  // Try to parse DD/MM/YY format (ex: 22/04/26)
+  const parts = dateStr.split(/[\/\-]/);
+  if (parts.length === 3) {
+    let day, month, year;
+    
+    // User said DD/MM/YY
+    day = parts[0].padStart(2, '0');
+    month = parts[1].padStart(2, '0');
+    year = parts[2];
+    
+    if (year.length === 2) {
+      year = "20" + year;
+    }
+    
+    // Validate if it's a valid date
+    const isoDate = `${year}-${month}-${day}`;
+    if (!isNaN(Date.parse(isoDate))) {
+      return isoDate;
+    }
+  }
+  
+  // Fallback to current date or try native parsing if ISO-ish
+  try {
+    const d = new Date(dateStr);
+    if (!isNaN(d.getTime())) {
+      return d.toISOString().slice(0, 10);
+    }
+  } catch (e) {}
+  
+  return new Date().toISOString().slice(0, 10);
 }
 
 export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
@@ -93,7 +119,7 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
         rows.push({
           sn,
           resultado,
-          data_teste: dataIdx >= 0 && cols[dataIdx]?.trim() ? cols[dataIdx].trim() : new Date().toISOString().slice(0, 10),
+          data_teste: dataIdx >= 0 && cols[dataIdx]?.trim() ? cols[dataIdx].trim() : "",
           tecnico,
           observacoes: observacoes,
         });
@@ -104,12 +130,12 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
         return;
       }
 
-      // Collect unique SNs and validate against lab_items (entradas)
+      // Collect unique SNs and validate against equipamentos
       const uniqueSns = [...new Set(rows.map((r) => r.sn))];
 
-      const { data: labEntries, error } = await (supabase
-        .from("equipamentos") as any)
-        .select("sn, codigo, nome")
+      const { data: labEntries, error } = await supabase
+        .from("equipamentos")
+        .select("id, sn, codigo, nome")
         .in("sn", uniqueSns);
 
       if (error) {
@@ -119,9 +145,9 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
       }
 
       // Build lookup map
-      const snMap = new Map<string, { codigo: string; nome: string }>();
+      const snMap = new Map<string, { id: string; codigo: string; nome: string }>();
       (labEntries || []).forEach((entry: any) => {
-        snMap.set(entry.sn, { codigo: entry.codigo, nome: entry.nome });
+        snMap.set(entry.sn, { id: entry.id, codigo: entry.codigo, nome: entry.nome });
       });
 
       const batch: NewTestResult[] = [];
@@ -131,16 +157,21 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
         const entry = snMap.get(row.sn);
         if (!entry) {
           failedSns.push(row.sn);
+          // Feedback: Show detailed error in console as requested
+          console.error(`ERRO IMPORTAÇÃO: SN "${row.sn}" não encontrado na tabela 'equipamentos'.`);
           continue;
         }
+        
         batch.push({
+          equipment_id: entry.id,
           sn: row.sn,
           codigo: entry.codigo,
           nome: entry.nome,
           resultado: row.resultado,
           observacoes: row.observacoes,
-          data_teste: row.data_teste,
+          data_teste: parseDateToISO(row.data_teste),
           testado_por: row.tecnico || fallbackTecnico,
+          destino_reparo: "", // Default to empty for batch imports
         });
       }
 
@@ -149,7 +180,7 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
         const previewSns = failedSns.slice(0, 5).join(", ");
         const extra = failedSns.length > 5 ? ` e mais ${failedSns.length - 5}` : "";
         toast.error(
-          `${failedSns.length} SN(s) não registrado(s) na Entrada: ${previewSns}${extra}`,
+          `${failedSns.length} SN(s) não encontrado(s) na tabela de Equipamentos: ${previewSns}${extra}`,
           { duration: 8000 }
         );
       }

@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export interface TestResult {
   id: string;
+  equipment_id: string;
   sn: string;
   codigo: string;
   nome: string;
@@ -16,7 +17,7 @@ export interface TestResult {
   created_at: string;
 }
 
-type NewTestResult = Omit<TestResult, "id" | "created_at">;
+export type NewTestResult = Omit<TestResult, "id" | "created_at">;
 
 export function useTestResults() {
   const queryClient = useQueryClient();
@@ -36,7 +37,9 @@ export function useTestResults() {
 
   const addMutation = useMutation({
     mutationFn: async (data: NewTestResult) => {
-      const { error } = await supabase.from("test_results").insert({
+      // 1. Create test result
+      const { error: insertError } = await supabase.from("test_results").insert({
+        equipment_id: data.equipment_id,
         sn: data.sn,
         codigo: data.codigo,
         nome: data.nome,
@@ -47,13 +50,25 @@ export function useTestResults() {
         destino_reparo: data.destino_reparo || "",
         created_by: user?.email || "",
       });
-      if (error) throw error;
+      if (insertError) throw insertError;
+
+      // 2. Update equipment status_teste
+      const { error: updateError } = await supabase
+        .from("equipamentos")
+        .update({ status_teste: data.resultado })
+        .eq("id", data.equipment_id);
+      
+      if (updateError) throw updateError;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["test_results"] });
+      queryClient.invalidateQueries({ queryKey: ["equipamentos"] });
       toast.success("Resultado de teste registrado com sucesso!");
     },
-    onError: () => toast.error("Erro ao registrar resultado de teste."),
+    onError: (error) => {
+      console.error(error);
+      toast.error("Erro ao registrar resultado de teste.");
+    },
   });
 
   const deleteMutation = useMutation({
@@ -67,8 +82,10 @@ export function useTestResults() {
 
   const addBatchMutation = useMutation({
     mutationFn: async (items: NewTestResult[]) => {
-      const { error } = await supabase.from("test_results").insert(
+      // 1. Insert results
+      const { error: insertError } = await supabase.from("test_results").insert(
         items.map((d) => ({
+          equipment_id: d.equipment_id,
           sn: d.sn,
           codigo: d.codigo,
           nome: d.nome,
@@ -80,13 +97,25 @@ export function useTestResults() {
           created_by: user?.email || "",
         }))
       );
-      if (error) throw error;
+      if (insertError) throw insertError;
+
+      // 2. Update equipment statuses (one by one or using a trick, but one by one is safer for simple apps)
+      for (const item of items) {
+        await supabase
+          .from("equipamentos")
+          .update({ status_teste: item.resultado })
+          .eq("id", item.equipment_id);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["test_results"] });
+      queryClient.invalidateQueries({ queryKey: ["equipamentos"] });
       toast.success("Resultados importados com sucesso!");
     },
-    onError: () => toast.error("Erro ao importar resultados."),
+    onError: (error) => {
+      console.error(error);
+      toast.error("Erro ao importar resultados.");
+    },
   });
 
   return {

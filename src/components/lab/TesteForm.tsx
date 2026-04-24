@@ -112,8 +112,12 @@ export function TesteForm({ labItems, isAdmin, prefillSN, onComplete }: TesteFor
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!sn.trim() || !resultado) return;
+    if (!sn.trim() || !resultado || !foundItem) {
+      if (!foundItem) toast.error("Por favor, busque e selecione um equipamento válido primeiro.");
+      return;
+    }
     addResult({
+      equipment_id: foundItem.id,
       sn: sn.trim(),
       codigo,
       nome,
