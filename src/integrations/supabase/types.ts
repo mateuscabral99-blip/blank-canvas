@@ -20,9 +20,11 @@ export type Database = {
           classificacao: string | null
           codigo: string
           created_at: string
+          created_by_id: string | null
           id: string
           nome: string
           updated_at: string | null
+          updated_by_id: string | null
           valor_unitario: number
         }
         Insert: {
@@ -30,9 +32,11 @@ export type Database = {
           classificacao?: string | null
           codigo: string
           created_at?: string
+          created_by_id?: string | null
           id?: string
           nome: string
           updated_at?: string | null
+          updated_by_id?: string | null
           valor_unitario?: number
         }
         Update: {
@@ -40,9 +44,11 @@ export type Database = {
           classificacao?: string | null
           codigo?: string
           created_at?: string
+          created_by_id?: string | null
           id?: string
           nome?: string
           updated_at?: string | null
+          updated_by_id?: string | null
           valor_unitario?: number
         }
         Relationships: []
@@ -57,6 +63,7 @@ export type Database = {
           conferido_por: string
           created_at: string
           created_by: string
+          created_by_id: string | null
           data_entrada: string
           destinacao: string | null
           destino: string | null
@@ -78,6 +85,7 @@ export type Database = {
           tecnico_responsavel_id: string | null
           tipo: string | null
           updated_at: string | null
+          updated_by_id: string | null
           valor_estimado: number
         }
         Insert: {
@@ -89,6 +97,7 @@ export type Database = {
           conferido_por?: string
           created_at?: string
           created_by?: string
+          created_by_id?: string | null
           data_entrada?: string
           destinacao?: string | null
           destino?: string | null
@@ -110,6 +119,7 @@ export type Database = {
           tecnico_responsavel_id?: string | null
           tipo?: string | null
           updated_at?: string | null
+          updated_by_id?: string | null
           valor_estimado?: number
         }
         Update: {
@@ -121,6 +131,7 @@ export type Database = {
           conferido_por?: string
           created_at?: string
           created_by?: string
+          created_by_id?: string | null
           data_entrada?: string
           destinacao?: string | null
           destino?: string | null
@@ -142,6 +153,7 @@ export type Database = {
           tecnico_responsavel_id?: string | null
           tipo?: string | null
           updated_at?: string | null
+          updated_by_id?: string | null
           valor_estimado?: number
         }
         Relationships: [
@@ -232,6 +244,7 @@ export type Database = {
           conferente_nome: string | null
           created_at: string | null
           created_by: string | null
+          created_by_id: string | null
           created_by_name: string | null
           data_entrada: string | null
           data_saida: string | null
@@ -259,6 +272,7 @@ export type Database = {
           tecnico_responsavel: string | null
           tecnico_responsavel_id: string | null
           updated_at: string | null
+          updated_by_id: string | null
           usuario: string | null
           usuario_nome: string | null
           valor_estimado: number | null
@@ -275,6 +289,7 @@ export type Database = {
           conferente_nome?: string | null
           created_at?: string | null
           created_by?: string | null
+          created_by_id?: string | null
           created_by_name?: string | null
           data_entrada?: string | null
           data_saida?: string | null
@@ -302,6 +317,7 @@ export type Database = {
           tecnico_responsavel?: string | null
           tecnico_responsavel_id?: string | null
           updated_at?: string | null
+          updated_by_id?: string | null
           usuario?: string | null
           usuario_nome?: string | null
           valor_estimado?: number | null
@@ -318,6 +334,7 @@ export type Database = {
           conferente_nome?: string | null
           created_at?: string | null
           created_by?: string | null
+          created_by_id?: string | null
           created_by_name?: string | null
           data_entrada?: string | null
           data_saida?: string | null
@@ -345,6 +362,7 @@ export type Database = {
           tecnico_responsavel?: string | null
           tecnico_responsavel_id?: string | null
           updated_at?: string | null
+          updated_by_id?: string | null
           usuario?: string | null
           usuario_nome?: string | null
           valor_estimado?: number | null
@@ -805,7 +823,7 @@ export type Database = {
       is_admin_or_supervisor: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      app_role: "admin" | "supervisor" | "operador"
+      app_role: "admin" | "supervisor" | "operator"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -933,7 +951,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "supervisor", "operador"],
+      app_role: ["admin", "supervisor", "operator"],
     },
   },
 } as const
