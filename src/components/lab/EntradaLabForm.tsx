@@ -105,7 +105,6 @@ export function EntradaLabForm({ onAdd, onImportBatch, isBatchLoading }: Props) 
       valor_estimado: 0,
       data_entrada: dataRecebimento,
       conferente: conferidoPor,
-      conferente: conferidoPor,
     };
   };
 

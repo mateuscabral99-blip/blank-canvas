@@ -17,7 +17,7 @@ export type Database = {
       cadastro_modelos: {
         Row: {
           categoria: string | null
-          classificacao: string
+          classificacao: string | null
           codigo: string
           created_at: string
           id: string
@@ -26,7 +26,7 @@ export type Database = {
         }
         Insert: {
           categoria?: string | null
-          classificacao: string
+          classificacao?: string | null
           codigo: string
           created_at?: string
           id?: string
@@ -35,7 +35,7 @@ export type Database = {
         }
         Update: {
           categoria?: string | null
-          classificacao?: string
+          classificacao?: string | null
           codigo?: string
           created_at?: string
           id?: string
@@ -141,6 +141,7 @@ export type Database = {
       }
       lab_items: {
         Row: {
+          acao_recomendada: string | null
           categoria: string | null
           codigo: string | null
           codigo_interno: string | null
@@ -150,9 +151,11 @@ export type Database = {
           conferente_id: string | null
           conferente_nome: string | null
           created_at: string | null
+          created_by: string | null
           created_by_name: string | null
           data_entrada: string | null
           data_saida: string | null
+          dias_estoque: number | null
           equipment_id: string | null
           fabricante: string | null
           fornecedor: string | null
@@ -169,13 +172,16 @@ export type Database = {
           sn: string | null
           status: string | null
           status_final: string | null
+          status_teste: string | null
           supplier_id: string | null
           tecnico: string | null
           tecnico_responsavel: string | null
           usuario: string | null
           usuario_nome: string | null
+          valor_estimado: number | null
         }
         Insert: {
+          acao_recomendada?: string | null
           categoria?: string | null
           codigo?: string | null
           codigo_interno?: string | null
@@ -185,9 +191,11 @@ export type Database = {
           conferente_id?: string | null
           conferente_nome?: string | null
           created_at?: string | null
+          created_by?: string | null
           created_by_name?: string | null
           data_entrada?: string | null
           data_saida?: string | null
+          dias_estoque?: number | null
           equipment_id?: string | null
           fabricante?: string | null
           fornecedor?: string | null
@@ -204,13 +212,16 @@ export type Database = {
           sn?: string | null
           status?: string | null
           status_final?: string | null
+          status_teste?: string | null
           supplier_id?: string | null
           tecnico?: string | null
           tecnico_responsavel?: string | null
           usuario?: string | null
           usuario_nome?: string | null
+          valor_estimado?: number | null
         }
         Update: {
+          acao_recomendada?: string | null
           categoria?: string | null
           codigo?: string | null
           codigo_interno?: string | null
@@ -220,9 +231,11 @@ export type Database = {
           conferente_id?: string | null
           conferente_nome?: string | null
           created_at?: string | null
+          created_by?: string | null
           created_by_name?: string | null
           data_entrada?: string | null
           data_saida?: string | null
+          dias_estoque?: number | null
           equipment_id?: string | null
           fabricante?: string | null
           fornecedor?: string | null
@@ -239,11 +252,13 @@ export type Database = {
           sn?: string | null
           status?: string | null
           status_final?: string | null
+          status_teste?: string | null
           supplier_id?: string | null
           tecnico?: string | null
           tecnico_responsavel?: string | null
           usuario?: string | null
           usuario_nome?: string | null
+          valor_estimado?: number | null
         }
         Relationships: []
       }
@@ -362,6 +377,7 @@ export type Database = {
           sn: string | null
           solucao: string | null
           status: string | null
+          supplier_id: string | null
           tecnico: string | null
         }
         Insert: {
@@ -377,6 +393,7 @@ export type Database = {
           sn?: string | null
           solucao?: string | null
           status?: string | null
+          supplier_id?: string | null
           tecnico?: string | null
         }
         Update: {
@@ -392,9 +409,18 @@ export type Database = {
           sn?: string | null
           solucao?: string | null
           status?: string | null
+          supplier_id?: string | null
           tecnico?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "repair_returns_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "repair_suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       repair_suppliers: {
         Row: {
