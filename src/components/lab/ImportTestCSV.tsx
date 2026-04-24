@@ -33,30 +33,50 @@ function findHeaderIndex(headers: string[], candidates: string[]): number {
 function parseDateToISO(dateStr: string): string {
   if (!dateStr) return new Date().toISOString().slice(0, 10);
   
-  // Try to parse DD/MM/YY format (ex: 22/04/26)
-  const parts = dateStr.split(/[\/\-]/);
+  // Clean string
+  const cleanStr = dateStr.trim();
+  
+  // Try to parse YYYY-MM-DD format
+  if (/^\d{4}-\d{2}-\d{2}/.test(cleanStr)) {
+    return cleanStr.slice(0, 10);
+  }
+
+  // Try to parse DD/MM/YY or DD/MM/YYYY or YY/MM/DD
+  const parts = cleanStr.split(/[\/\-]/);
   if (parts.length === 3) {
     let day, month, year;
     
-    // User said DD/MM/YY
-    day = parts[0].padStart(2, '0');
-    month = parts[1].padStart(2, '0');
-    year = parts[2];
-    
-    if (year.length === 2) {
-      year = "20" + year;
+    // Check if first part is a year (YYYY)
+    if (parts[0].length === 4) {
+      year = parts[0];
+      month = parts[1].padStart(2, '0');
+      day = parts[2].padStart(2, '0');
+    } 
+    // Check if last part is a year (YYYY or YY)
+    else if (parts[2].length === 4 || parts[2].length === 2) {
+      day = parts[0].padStart(2, '0');
+      month = parts[1].padStart(2, '0');
+      year = parts[2];
+      if (year.length === 2) {
+        year = "20" + year;
+      }
+    }
+    // Ambiguous case (e.g. 22/04/26) - assuming Brazilian DD/MM/YY as it's common here
+    else {
+      day = parts[0].padStart(2, '0');
+      month = parts[1].padStart(2, '0');
+      year = "20" + parts[2].padStart(2, '0').slice(-2);
     }
     
-    // Validate if it's a valid date
     const isoDate = `${year}-${month}-${day}`;
     if (!isNaN(Date.parse(isoDate))) {
       return isoDate;
     }
   }
   
-  // Fallback to current date or try native parsing if ISO-ish
+  // Fallback to native parsing
   try {
-    const d = new Date(dateStr);
+    const d = new Date(cleanStr);
     if (!isNaN(d.getTime())) {
       return d.toISOString().slice(0, 10);
     }
@@ -133,14 +153,19 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
       // Collect unique SNs and validate against equipamentos
       const uniqueSns = [...new Set(rows.map((r) => r.sn))];
 
-      const { data: labEntries, error } = await supabase
+      const { data: labEntries, error: supabaseError } = await supabase
         .from("equipamentos")
         .select("id, sn, codigo, nome")
         .in("sn", uniqueSns);
 
-      if (error) {
+      if (supabaseError) {
         toast.error("Erro ao verificar entradas no banco de dados.");
-        console.error(error);
+        console.error("Erro completo do Supabase ao buscar equipamentos:", {
+          message: supabaseError.message,
+          code: supabaseError.code,
+          details: supabaseError.details,
+          hint: supabaseError.hint
+        });
         return;
       }
 
@@ -157,8 +182,10 @@ export function ImportTestCSV({ onImportBatch, isLoading }: Props) {
         const entry = snMap.get(row.sn);
         if (!entry) {
           failedSns.push(row.sn);
-          // Feedback: Show detailed error in console as requested
-          console.error(`ERRO IMPORTAÇÃO: SN "${row.sn}" não encontrado na tabela 'equipamentos'.`);
+          toast.error(`SN ${row.sn} não encontrado na base`, {
+            description: "Este equipamento precisa ser cadastrado na entrada antes de importar resultados de teste."
+          });
+          console.error(`Erro de Importação: SN "${row.sn}" não encontrado na tabela 'equipamentos'.`);
           continue;
         }
         
