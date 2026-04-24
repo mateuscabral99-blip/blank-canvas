@@ -53,10 +53,8 @@ export function InventarioLab({ items, userRole }: Props) {
   };
 
   const mapOriginLabel = (raw: string) => {
-    const cleaned = (raw || "").toLowerCase().trim();
-    if (cleaned.includes("reversa")) return "Reversa";
-    // Everything else (qualidade, desconexão, null, etc) maps to "Desconexão"
-    return "Desconexão";
+    if (!raw) return "Não informado";
+    return raw.trim();
   };
 
   const uniqueCategorias = useMemo(() => [...new Set(items.map(i => i.categoria).filter(Boolean))], [items]);
