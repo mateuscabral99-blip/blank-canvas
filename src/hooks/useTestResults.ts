@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export interface TestResult {
   id: string;
+  equipment_id: string;
   sn: string;
   codigo: string;
   nome: string;
@@ -16,7 +17,7 @@ export interface TestResult {
   created_at: string;
 }
 
-type NewTestResult = Omit<TestResult, "id" | "created_at">;
+export type NewTestResult = Omit<TestResult, "id" | "created_at">;
 
 export function useTestResults() {
   const queryClient = useQueryClient();
