@@ -25,6 +25,7 @@ interface SNResult {
   events: TimelineEvent[];
   nome?: string;
   codigo?: string;
+  origem?: string;
 }
 
 const stageMeta: Record<TimelineEvent["stage"], { icon: React.ReactNode; color: string; bg: string; ring: string }> = {
