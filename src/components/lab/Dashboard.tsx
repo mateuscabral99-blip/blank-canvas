@@ -145,6 +145,19 @@ export function Dashboard({ items, onCardClick }: Props) {
     return days;
   }, [items]);
 
+  const volumeByOrigin = useMemo(() => {
+    const map = new Map<string, number>();
+    items.forEach((i) => {
+      const raw = i.origem || "Não informado";
+      const cleaned = raw.toLowerCase().trim();
+      const origin = cleaned.includes("reversa") ? "Reversa" : "Desconexão";
+      map.set(origin, (map.get(origin) || 0) + 1);
+    });
+    return [...map.entries()]
+      .map(([origem, count]) => ({ origem, count }))
+      .sort((a, b) => b.count - a.count);
+  }, [items]);
+
   const allCritical = useMemo(() => {
     const ids = new Set<string>();
     const result: LabItem[] = [];
