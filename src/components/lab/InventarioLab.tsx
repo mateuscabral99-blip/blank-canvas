@@ -360,9 +360,9 @@ export function InventarioLab({ items, userRole }: Props) {
                 <SortHeader label="Código" field="codigo" />
                 <SortHeader label="Nome" field="nome" />
                 <SortHeader label="Categoria" field="categoria" />
-                <SortHeader label="Origem" field="origem_fluxo" />
+                <SortHeader label="Origem" field="origem" />
                 <SortHeader label="Destino" field="destino" />
-                <SortHeader label="Conferente" field="conferido_por" />
+                <SortHeader label="Conferente" field="conferente" />
               </TableRow>
             </TableHeader>
             <TableBody>
