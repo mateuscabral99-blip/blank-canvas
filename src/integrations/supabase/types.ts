@@ -573,6 +573,7 @@ export type Database = {
         Row: {
           created_at: string | null
           created_by_id: string | null
+          custo_reparo: number | null
           data_analise: string | null
           data_retorno: string | null
           defeito_constatado: string | null
@@ -596,6 +597,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           created_by_id?: string | null
+          custo_reparo?: number | null
           data_analise?: string | null
           data_retorno?: string | null
           defeito_constatado?: string | null
@@ -619,6 +621,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           created_by_id?: string | null
+          custo_reparo?: number | null
           data_analise?: string | null
           data_retorno?: string | null
           defeito_constatado?: string | null
@@ -740,8 +743,12 @@ export type Database = {
           checklist_firmware: boolean | null
           checklist_fonte: boolean | null
           checklist_leds: boolean | null
+          checklist_pon: boolean | null
           checklist_portas: boolean | null
           checklist_portas_lan: boolean | null
+          checklist_reset: boolean | null
+          checklist_telefone: boolean | null
+          checklist_usb: boolean | null
           checklist_wifi: boolean | null
           codigo: string | null
           codigo_imanager: string | null
@@ -754,6 +761,7 @@ export type Database = {
           destino_reparo: string | null
           equipment_id: string | null
           id: string
+          motivo_reincidencia: string | null
           nome: string | null
           observacoes: string | null
           reincidencia_identificada: boolean | null
@@ -773,8 +781,12 @@ export type Database = {
           checklist_firmware?: boolean | null
           checklist_fonte?: boolean | null
           checklist_leds?: boolean | null
+          checklist_pon?: boolean | null
           checklist_portas?: boolean | null
           checklist_portas_lan?: boolean | null
+          checklist_reset?: boolean | null
+          checklist_telefone?: boolean | null
+          checklist_usb?: boolean | null
           checklist_wifi?: boolean | null
           codigo?: string | null
           codigo_imanager?: string | null
@@ -787,6 +799,7 @@ export type Database = {
           destino_reparo?: string | null
           equipment_id?: string | null
           id?: string
+          motivo_reincidencia?: string | null
           nome?: string | null
           observacoes?: string | null
           reincidencia_identificada?: boolean | null
@@ -806,8 +819,12 @@ export type Database = {
           checklist_firmware?: boolean | null
           checklist_fonte?: boolean | null
           checklist_leds?: boolean | null
+          checklist_pon?: boolean | null
           checklist_portas?: boolean | null
           checklist_portas_lan?: boolean | null
+          checklist_reset?: boolean | null
+          checklist_telefone?: boolean | null
+          checklist_usb?: boolean | null
           checklist_wifi?: boolean | null
           codigo?: string | null
           codigo_imanager?: string | null
@@ -820,6 +837,7 @@ export type Database = {
           destino_reparo?: string | null
           equipment_id?: string | null
           id?: string
+          motivo_reincidencia?: string | null
           nome?: string | null
           observacoes?: string | null
           reincidencia_identificada?: boolean | null
