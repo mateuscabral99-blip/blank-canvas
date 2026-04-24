@@ -290,22 +290,36 @@ export function Dashboard({ items, onCardClick }: Props) {
           <CardTitle className="text-base font-semibold flex items-center gap-2">
             <MapPin className="h-4 w-4 text-primary" /> Volume por Origem
           </CardTitle>
-          <p className="text-xs text-muted-foreground mt-1">Distribuição de itens por origem (Reversa vs Desconexão)</p>
+          <p className="text-xs text-muted-foreground mt-1">Distribuição de itens por origem real</p>
         </CardHeader>
-        <CardContent>
-          <ChartContainer config={{ count: { label: "Quantidade", color: "hsl(var(--primary))" } }} className="h-[200px] w-full">
-            <BarChart data={volumeByOrigin} layout="vertical" margin={{ top: 5, right: 40, left: 10, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" className="stroke-border/30" horizontal={false} />
-              <XAxis type="number" tick={{ fontSize: 11 }} allowDecimals={false} />
-              <YAxis type="category" dataKey="origem" tick={{ fontSize: 11 }} width={100} />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Bar dataKey="count" radius={[0, 4, 4, 0]} name="Quantidade">
-                {volumeByOrigin.map((entry, idx) => (
-                  <Cell key={`cell-${idx}`} fill={entry.origem === "Reversa" ? "hsl(var(--primary))" : "hsl(217 91% 30%)"} />
+        <CardContent className="flex flex-col items-center">
+          <ChartContainer config={{ count: { label: "Quantidade", color: "hsl(var(--primary))" } }} className="h-[220px] w-full">
+            <PieChart>
+              <Pie 
+                data={volumeByOrigin} 
+                cx="50%" 
+                cy="50%" 
+                innerRadius={55} 
+                outerRadius={85} 
+                paddingAngle={3} 
+                dataKey="count"
+                nameKey="origem"
+              >
+                {volumeByOrigin.map((entry, index) => (
+                  <Cell key={`cell-origin-${index}`} fill={entry.color} />
                 ))}
-              </Bar>
-            </BarChart>
+              </Pie>
+              <ChartTooltip content={<ChartTooltipContent />} />
+            </PieChart>
           </ChartContainer>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-3">
+            {volumeByOrigin.map((entry, idx) => (
+              <div key={idx} className="flex items-center gap-1.5">
+                <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: entry.color }} />
+                <span className="text-xs text-muted-foreground">{entry.origem} ({entry.count})</span>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
 
