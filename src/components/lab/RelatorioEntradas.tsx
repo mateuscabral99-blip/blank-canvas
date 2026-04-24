@@ -37,6 +37,7 @@ export function RelatorioEntradas({ userRole }: Props) {
   const [filterNome, setFilterNome] = useState("all");
   const [filterDestino, setFilterDestino] = useState("all");
   const [filterConferente, setFilterConferente] = useState("all");
+  const [filterOrigem, setFilterOrigem] = useState("all");
   const [search, setSearch] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [page, setPage] = useState(1);
@@ -44,7 +45,8 @@ export function RelatorioEntradas({ userRole }: Props) {
   const uniqueCategorias = useMemo(() => [...new Set(items.map(i => i.categoria).filter(Boolean))], [items]);
   const uniqueNomes = useMemo(() => [...new Set(items.map(i => i.nome).filter(Boolean))], [items]);
   const uniqueDestinos = useMemo(() => [...new Set(items.map(i => getDestino(i)).filter(Boolean))], [items]);
-  const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferido_por).filter(Boolean))], [items]);
+  const uniqueConferentes = useMemo(() => [...new Set(items.map(i => i.conferente).filter(Boolean))], [items]);
+  const uniqueOrigens = useMemo(() => [...new Set(items.map(i => i.origem).filter(Boolean))], [items]);
 
   const filtered = useMemo(() => {
     return items.filter(i => {
@@ -53,7 +55,8 @@ export function RelatorioEntradas({ userRole }: Props) {
       if (filterCategoria !== "all" && i.categoria !== filterCategoria) return false;
       if (filterNome !== "all" && i.nome !== filterNome) return false;
       if (filterDestino !== "all" && getDestino(i) !== filterDestino) return false;
-      if (filterConferente !== "all" && i.conferido_por !== filterConferente) return false;
+      if (filterConferente !== "all" && i.conferente !== filterConferente) return false;
+      if (filterOrigem !== "all" && i.origem !== filterOrigem) return false;
       if (search) {
         const s = search.toLowerCase();
         if (
@@ -64,7 +67,7 @@ export function RelatorioEntradas({ userRole }: Props) {
       }
       return true;
     });
-  }, [items, dateFrom, dateTo, filterCategoria, filterNome, filterDestino, filterConferente, search]);
+  }, [items, dateFrom, dateTo, filterCategoria, filterNome, filterDestino, filterConferente, filterOrigem, search]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const paginated = filtered.slice((page - 1) * itemsPerPage, page * itemsPerPage);
