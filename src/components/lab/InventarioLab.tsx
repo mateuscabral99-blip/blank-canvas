@@ -21,7 +21,7 @@ interface Props {
   userRole?: string | null;
 }
 
-type SortKey = "data_entrada" | "sn" | "codigo" | "nome" | "categoria" | "origem_fluxo" | "destino" | "conferido_por";
+type SortKey = "data_entrada" | "sn" | "codigo" | "nome" | "categoria" | "origem" | "destino" | "conferente";
 type SortDir = "asc" | "desc";
 
 const ORIGIN_LABELS: Record<string, string> = {
